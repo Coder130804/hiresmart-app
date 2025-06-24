@@ -12,7 +12,7 @@ const MyProfile = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const res = await fetch('http://localhost:5000/api/profile', {
+      const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -29,7 +29,7 @@ const MyProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch('http://localhost:5000/api/profile', {
+    const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

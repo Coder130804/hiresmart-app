@@ -10,7 +10,7 @@ const MyProfileView = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    fetch('http://localhost:5000/api/profile', {
+    fetch('https://hiresmart-backend1.onrender.com/api/profile', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
