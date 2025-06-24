@@ -1,0 +1,82 @@
+/* Common Navbar Style (same as Dashboard) */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 15px 30px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar ul li a,
+.navbar ul li button {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.navbar ul li a:hover,
+.navbar ul li button:hover {
+  color: #00ccff;
+}
+
+/* Background */
+.contact-page {
+  background: url('https://i0.wp.com/connectusrecruitment.co.uk/wp-content/uploads/2024/08/interview-feedback-cover-1.jpg?fit=1000%2C553&ssl=1') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  padding: 30px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Contact Box */
+.contact-box {
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 25px 40px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.contact-box h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.contact-box p {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+/* Footer */
+.footer {
+  margin-top: 40px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #ccc;
+}

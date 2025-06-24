@@ -1,0 +1,58 @@
+/* 📄 File: src/pages/giveinterview.css */
+
+.interview-page {
+  background-image: url('https://i0.wp.com/connectusrecruitment.co.uk/wp-content/uploads/2024/08/interview-feedback-cover-1.jpg?fit=1000%2C553&ssl=1');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 40px;
+  color: white;
+  text-align: center;
+}
+.interview-page h1,
+.interview-page p,
+.recorded-preview,
+.button-row {
+  background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.video-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.video-player {
+  width: 100%;
+  max-width: 640px;
+  height: 360px;
+  background: black;
+  border-radius: 10px;
+}
+
+.button-row {
+  margin: 20px 0;
+}
+
+.button-row button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.recorded-preview {
+  margin-top: 30px;
+}
+
+.video-preview {
+  width: 100%;
+  max-width: 640px;
+  height: 360px;
+  border-radius: 10px;
+}

@@ -1,0 +1,41 @@
+.score-feedback-page {
+   background-image: url('https://cdn.pixabay.com/photo/2016/03/31/20/11/meeting-1295901_1280.jpg');
+    background-size: cover;
+  min-height: 100vh;
+  color: black;
+}
+
+.feedback-box {
+  background: rgba(255, 255, 255, 0.95);
+  margin: 50px auto;
+  padding: 30px;
+  max-width: 700px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+}
+
+.chart-container {
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+}
+
+.summary {
+  font-size: 1.2rem;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.question-feedback {
+  margin-top: 30px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+
+
