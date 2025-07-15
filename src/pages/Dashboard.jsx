@@ -40,7 +40,7 @@ const Dashboard = () => {
       {/* ───────────── HERO / WELCOME ───────────── */}
       <header className="dashboard-welcome">
         <h1>Welcome&nbsp;to&nbsp;HireSmart</h1>
-        <p>Your AI‑powered interview practice assistant</p>
+        <p>Your AI‑powered interview assistant</p>
       </header>
 
       {/* ───────────── HOW‑IT‑WORKS + CONSENT ───────────── */}
@@ -51,7 +51,7 @@ const Dashboard = () => {
           <li><strong>Complete Profile</strong> so we understand your background.</li>
           <li><strong>Give AI Interview</strong> – answer 10 questions on camera.</li>
           <li><strong>AI Reviews</strong> your answers automatically.</li>
-          <li><strong>See Score &amp; Feedback</strong> to improve before real interviews.</li>
+          <li><strong>See Score &amp; Feedback</strong> See how you performed. </li>
         </ol>
 
         {/* ───── Consent form ───── */}
@@ -67,7 +67,7 @@ const Dashboard = () => {
           <button
             className="consent-btn"
             disabled={!consented}
-            onClick={() => alert('Consent saved! You can now use all features.')}
+            onClick={() => alert('Consent saved! You can now give your personal information and give interview.')}
           >
             Submit &amp; Continue
           </button>
