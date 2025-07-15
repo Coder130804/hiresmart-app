@@ -82,3 +82,44 @@ body, html {
 .how-it-works-box li {
   margin-bottom: 10px;
 }
+
+/* ─── Consent area & link disabling ─── */
+.consent-box {
+  margin-top: 20px;
+  background: rgba(0,0,0,0.05);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.consent-box label {
+  font-size: 0.95rem;
+}
+
+.consent-btn {
+  margin-left: 12px;
+  padding: 6px 14px;
+  border: none;
+  background: #1e3a8a;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.consent-btn:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
+
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* Keep welcome + how‑it‑works visible without scroll on laptops */
+.dashboard-welcome h1 {
+  font-size: 2.2rem;
+  margin: 0 0 8px;
+}
+.dashboard-welcome p {
+  margin: 0;
+}

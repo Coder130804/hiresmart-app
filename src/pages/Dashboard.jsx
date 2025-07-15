@@ -1,59 +1,79 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './dashboard.css';
 
 const Dashboard = () => {
+  const [consented, setConsented] = useState(false);
+
   return (
-    <>
-      <div className="dashboard-container">
-        <nav className="navbar">
-         <div style={{ display: 'flex', alignItems: 'center' }}>
-  <img
-    src="https://static.vecteezy.com/system/resources/thumbnails/017/210/724/small/h-s-letter-logo-design-with-swoosh-design-concept-free-vector.jpg"
-    alt="Logo"
-    style={{ height: '30px', width: '30px', marginRight: '10px', borderRadius: '4px' }}
-  />
-  <h2 className="logo">HireSmart</h2>
-</div>
-
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/give-interview">Give Interview</Link></li>
-            <li><Link to="/score-feedback">Score & Feedback</Link></li>
-            <li><Link to="/profile">My Profile</Link></li>
-            <li><Link to="/contact">Contact Us</Link></li>
-            <li>
-              <button
-                onClick={() => {
-                  localStorage.removeItem('token');
-                  window.location.href = '/';
-                }}
-              >
-                Logout
-              </button>
-            </li>
-          </ul>
-        </nav>
-
-        <div className="dashboard-welcome">
-          <h1>Hi! Welcome to HireSmart Dashboard</h1>
-          <p>Select an option from above to begin your AI-powered interview journey!</p>
+    <div className="dashboard-container">
+      {/* ───────────── NAVBAR ───────────── */}
+      <nav className="navbar">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/017/210/724/small/h-s-letter-logo-design-with-swoosh-design-concept-free-vector.jpg"
+            alt="Logo"
+            style={{ height: '30px', width: '30px', marginRight: '10px', borderRadius: '4px' }}
+          />
+          <h2 className="logo">HireSmart</h2>
         </div>
 
-        <div className="how-it-works-box">
-  <h2>🛠️ How HireSmart Works</h2>
-  <ol>
-    <li><strong>Sign Up or Login:</strong> Create your account to access all features.</li>
-    <li><strong>Complete Your Profile:</strong> Fill in your personal and professional details. This helps us understand your background.</li>
-    <li><strong>Give AI Interview:</strong> You'll be asked 10 common interview questions. Your responses are recorded through your webcam.</li>
-    <li><strong>AI Reviews Your Answers:</strong> Our AI analyzes your video responses and provides feedback on how well you answered.</li>
-    <li><strong>Check Your Score & Feedback:</strong> Get a score out of 10 and see which questions you answered or missed.</li>
-    <li><strong>Use the Insights:</strong> Use your score and AI tips to improve for real interviews!</li>
-  </ol>
-</div>
+        <ul>
+          <li><Link className={consented ? '' : 'disabled-link'} to="/">Home</Link></li>
+          <li><Link className={consented ? '' : 'disabled-link'} to="/give-interview">Give Interview</Link></li>
+          <li><Link className={consented ? '' : 'disabled-link'} to="/score-feedback">Score &amp; Feedback</Link></li>
+          <li><Link className={consented ? '' : 'disabled-link'} to="/profile">My Profile</Link></li>
+          <li><Link className={consented ? '' : 'disabled-link'} to="/contact">Contact Us</Link></li>
+          <li>
+            <button
+              onClick={() => {
+                localStorage.removeItem('token');
+                window.location.href = '/';
+              }}
+            >
+              Logout
+            </button>
+          </li>
+        </ul>
+      </nav>
 
+      {/* ───────────── HERO / WELCOME ───────────── */}
+      <header className="dashboard-welcome">
+        <h1>Welcome&nbsp;to&nbsp;HireSmart</h1>
+        <p>Your AI‑powered interview practice assistant</p>
+      </header>
+
+      {/* ───────────── HOW‑IT‑WORKS + CONSENT ───────────── */}
+      <div className="how-it-works-box">
+        <h2>🛠️ How HireSmart Works</h2>
+        <ol>
+          <li><strong>Sign Up / Login</strong> to create your account.</li>
+          <li><strong>Complete Profile</strong> so we understand your background.</li>
+          <li><strong>Give AI Interview</strong> – answer 10 questions on camera.</li>
+          <li><strong>AI Reviews</strong> your answers automatically.</li>
+          <li><strong>See Score &amp; Feedback</strong> to improve before real interviews.</li>
+        </ol>
+
+        {/* ───── Consent form ───── */}
+        <div className="consent-box">
+          <label>
+            <input
+              type="checkbox"
+              checked={consented}
+              onChange={e => setConsented(e.target.checked)}
+            />
+            &nbsp;I understand that my personal details and interview videos will be captured and stored for analysis.
+          </label>
+          <button
+            className="consent-btn"
+            disabled={!consented}
+            onClick={() => alert('Consent saved! You can now use all features.')}
+          >
+            Submit &amp; Continue
+          </button>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 
