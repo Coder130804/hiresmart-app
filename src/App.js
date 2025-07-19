@@ -17,7 +17,7 @@ function App() {
         <Route path="/score-feedback" element={<ScoreFeedback />} />
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/contact" element={<ContactUs />} />
-        <Route path="/profile-view" element={<ProfileView />} />
+        <Route path="/profile-view" element={<MyProfileView />} />
       </Routes>
     </Router>
   );
