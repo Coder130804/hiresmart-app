@@ -16,7 +16,7 @@ app.use('/api/profile', require('./routes/profileRoutes'));
 app.use('/api/interview', require('./routes/interviewRoutes')); 
 app.use('/api/ai', require('./routes/aiRoutes'));
 app.use('/api/score', require('./routes/scoreRoutes'));
-
+app.use('/uploads', express.static('uploads'));
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
 });
