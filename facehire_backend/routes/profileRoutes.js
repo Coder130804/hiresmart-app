@@ -6,10 +6,10 @@ const auth = require('../middleware/auth');
 const multer = require('multer');
 const path = require('path');
 
-// File upload config
+// Multer file upload config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // this folder must exist
+    cb(null, 'uploads/');
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname);
@@ -18,19 +18,20 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    if (file.mimetype === 'application/pdf') {
-      cb(null, true);
-    } else {
-      cb(new Error('Only PDF files are allowed'));
-    }
+  storage,
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype === 'application/pdf') cb(null, true);
+    else cb(new Error('Only PDF files are allowed'));
   }
 });
 
-// Save or Update Profile (including CV)
+// Save or update profile
 router.post('/', auth, upload.single('cv'), async (req, res) => {
   try {
+    // debug check
+    // console.log('req.body:', req.body);
+    // console.log('req.file:', req.file);
+
     const {
       name, email, phone, dob, experience,
       previousCompany, previousSalary, salaryExpectations,
@@ -38,13 +39,15 @@ router.post('/', auth, upload.single('cv'), async (req, res) => {
       city, state, country, address
     } = req.body;
 
-    const languages = req.body['languages[]'] || []; // handles multi-select
+    // handle language array robustly
+    const rawLang = req.body['languages[]'] || req.body.languages || [];
+    const languages = Array.isArray(rawLang) ? rawLang : [rawLang];
 
     const profileData = {
       name, email, phone, dob, experience,
       previousCompany, previousSalary, salaryExpectations,
       areaOfInterest, qualifications, skills,
-      languages: Array.isArray(languages) ? languages : [languages],
+      languages,
       city, state, country, address
     };
 
@@ -64,7 +67,7 @@ router.post('/', auth, upload.single('cv'), async (req, res) => {
     res.json({ success: true, message: 'Profile saved successfully' });
 
   } catch (err) {
-    console.error(err.message);
+    console.error('❌ Error saving profile:', err.message);
     res.status(500).json({ success: false, message: 'Error saving profile' });
   }
 });

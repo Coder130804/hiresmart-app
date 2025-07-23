@@ -17,16 +17,20 @@ const MyProfile = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      try {
+        const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        const data = await res.json();
+        if (data && data.name) {
+          setForm(data);
+          setIsEdit(true);
+          navigate('/profile-view');
         }
-      });
-      const data = await res.json();
-      if (data && data.name) {
-        setForm(data);
-        setIsEdit(true); // show edit mode if profile exists
-        navigate('/profile-view'); // Redirect to view page
+      } catch (err) {
+        console.error('❌ Error fetching profile:', err.message);
       }
     };
     fetchProfile();
@@ -48,7 +52,7 @@ const MyProfile = () => {
 
     Object.entries(form).forEach(([key, value]) => {
       if (Array.isArray(value)) {
-        value.forEach(val => formData.append(`${key}[]`, val));
+        value.forEach(val => formData.append(`${key}[]`, val)); // keep [] for clarity
       } else {
         formData.append(key, value);
       }
@@ -56,20 +60,24 @@ const MyProfile = () => {
 
     if (cv) formData.append('cv', cv);
 
-    const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      },
-      body: formData
-    });
+    try {
+      const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        body: formData
+      });
 
-    const data = await res.json();
-    if (data.success) {
-      alert('✅ Profile saved successfully!');
-      navigate('/profile-view');
-    } else {
-      alert('❌ Error saving profile');
+      const data = await res.json();
+      if (data.success) {
+        alert('✅ Profile saved successfully!');
+        navigate('/profile-view');
+      } else {
+        alert('❌ Error saving profile: ' + data.message);
+      }
+    } catch (err) {
+      alert('❌ Upload error: ' + err.message);
     }
   };
 
@@ -84,7 +92,6 @@ const MyProfile = () => {
           />
           <h2 className="logo">HireSmart</h2>
         </div>
-
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/give-interview">Give Interview</a></li>
