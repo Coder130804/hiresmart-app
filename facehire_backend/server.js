@@ -5,8 +5,6 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
-const app = express();
-
 // ✅ Use CORS early
 app.use(cors({
   origin: ["http://localhost:3000", "https://hiresmart-app.vercel.app"],
@@ -36,3 +34,10 @@ app.use('/uploads', express.static('uploads'));
 app.listen(process.env.PORT, () => {
   console.log(`🚀 Server running on port ${process.env.PORT}`);
 });
+app.get('/', (req, res) => {
+  res.send('✅ HireSmart Backend is up!');
+});
+const app = express();
+const fs = require('fs');
+const uploadDir = 'uploads';
+if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);

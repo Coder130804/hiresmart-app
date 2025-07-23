@@ -71,5 +71,7 @@ router.post('/', auth, upload.single('cv'), async (req, res) => {
     res.status(500).json({ success: false, message: 'Error saving profile' });
   }
 });
+console.log('📦 Incoming profile data:', req.body);
+console.log('📎 Uploaded file:', req.file);
 
 module.exports = router;
