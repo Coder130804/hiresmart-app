@@ -18,7 +18,7 @@ const MyProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
+        const res = await fetch('https://hiresmart-backend1.onrender.com/profile', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }

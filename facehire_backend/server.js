@@ -3,7 +3,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const fs = require('fs');
 require('dotenv').config();
+
+const app = express();
+
+// ✅ Ensure uploads/ exists
+const uploadDir = 'uploads';
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
 // ✅ Use CORS early
 app.use(cors({
@@ -27,17 +36,16 @@ app.use('/api/interview', require('./routes/interviewRoutes'));
 app.use('/api/ai', require('./routes/aiRoutes'));
 app.use('/api/score', require('./routes/scoreRoutes'));
 
-// ✅ Static file serving
+// ✅ Serve uploaded files
 app.use('/uploads', express.static('uploads'));
 
-// ✅ Server start
-app.listen(process.env.PORT, () => {
-  console.log(`🚀 Server running on port ${process.env.PORT}`);
-});
+// ✅ Health check route
 app.get('/', (req, res) => {
   res.send('✅ HireSmart Backend is up!');
 });
-const app = express();
-const fs = require('fs');
-const uploadDir = 'uploads';
-if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+
+// ✅ Server start
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
