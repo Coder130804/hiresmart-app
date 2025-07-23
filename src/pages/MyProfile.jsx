@@ -18,7 +18,7 @@ const MyProfile = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const res = await fetch('https://hiresmart-backend1.onrender.com/profile', {
+        const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
@@ -61,19 +61,13 @@ const MyProfile = () => {
     if (cv) formData.append('cv', cv);
 
     try {
-      const res = await fetch('https://hiresmart-backend1.onrender.com/profile', {
+      const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body: formData
       });
-      const contentType = res.headers.get("content-type");
-if (!contentType || !contentType.includes("application/json")) {
-  const errorText = await res.text();
-  throw new Error("Unexpected response: " + errorText);
-}
-
 
       const data = await res.json();
       if (data.success) {

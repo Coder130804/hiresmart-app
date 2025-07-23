@@ -1,50 +1,42 @@
-// 📄 server.js
+// 📄 facehire_backend/server.js
 
 const express = require('express');
+const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
-const fs = require('fs');
-require('dotenv').config();
+const dotenv = require('dotenv');
+const path = require('path');
 
-const app = express();
+dotenv.config();
 
-// ✅ Ensure uploads/ exists
-const uploadDir = 'uploads';
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
+// Middleware
+app.use(cors());
+app.use(express.json({ limit: '500mb' })); // for JSON body (videoBase64)
+app.use(express.urlencoded({ extended: true, limit: '500mb' })); // for form-data (profile)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // serve uploaded files
 
-// ✅ Use CORS early
-app.use(cors({
-  origin: ["http://localhost:3000", "https://hiresmart-app.vercel.app"],
-  credentials: true
-}));
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => console.log('✅ MongoDB connected'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
 
-// ✅ Increased body limit to handle big base64 videos
-app.use(express.json({ limit: '200mb' }));
-app.use(express.urlencoded({ limit: '200mb', extended: true }));
+// Routes
+const authRoutes = require('./routes/authRoutes');
+const profileRoutes = require('./routes/profileRoutes');
+const interviewRoutes = require('./routes/interviewRoutes');
 
-// ✅ MongoDB connection
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ Connected to MongoDB'))
-  .catch(err => console.log('❌ MongoDB error:', err));
+app.use('/api/auth', authRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/interview', interviewRoutes);
 
-// ✅ Routes
-app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/profile', require('./routes/profileRoutes'));
-app.use('/api/interview', require('./routes/interviewRoutes'));
-app.use('/api/ai', require('./routes/aiRoutes'));
-app.use('/api/score', require('./routes/scoreRoutes'));
-
-// ✅ Serve uploaded files
-app.use('/uploads', express.static('uploads'));
-
-// ✅ Health check route
+// Optional root route for test
 app.get('/', (req, res) => {
-  res.send('✅ HireSmart Backend is up!');
+  res.send('✅ HireSmart backend is up and running!');
 });
 
-// ✅ Server start
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
