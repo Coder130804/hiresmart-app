@@ -1,10 +1,10 @@
-// 📄 facehire_backend/models/Profile.js
+// 📄 models/Profile.js
 const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   name: String,
-  email: String,
+  email: { type: String, required: true },
   phone: String,
   dob: String,
   experience: String,
@@ -14,12 +14,16 @@ const profileSchema = new mongoose.Schema({
   areaOfInterest: String,
   qualifications: String,
   skills: String,
-  languages: [String],
-  cv: String, // file path or filename
+  languages: String, // ✅ plain text field now
   city: String,
   state: String,
   country: String,
-  address: String
+  address: String,
+  cvFileName: String, // ✅ stores CV filename only
+  hasGivenInterview: {
+    type: Boolean,
+    default: false
+  }
 });
 
 module.exports = mongoose.model('Profile', profileSchema);

@@ -1,6 +1,7 @@
 // 📄 src/pages/MyProfile.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import './myprofile.css';
 
 const MyProfile = () => {
@@ -8,7 +9,7 @@ const MyProfile = () => {
     name: '', email: '', phone: '', dob: '', experience: '',
     previousCompany: '', previousSalary: '', salaryExpectations: '',
     areaOfInterest: '', qualifications: '', skills: '',
-    languages: [], city: '', state: '', country: '', address: ''
+    languages: '', city: '', state: '', country: '', address: ''
   });
 
   const [cv, setCV] = useState(null);
@@ -27,6 +28,7 @@ const MyProfile = () => {
         if (data && data.name) {
           setForm(data);
           setIsEdit(true);
+          Cookies.set('profile_filled', 'true', { expires: 30 });
           navigate('/profile-view');
         }
       } catch (err) {
@@ -37,13 +39,8 @@ const MyProfile = () => {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value, type, selectedOptions } = e.target;
-    if (type === "select-multiple") {
-      const values = Array.from(selectedOptions, opt => opt.value);
-      setForm({ ...form, [name]: values });
-    } else {
-      setForm({ ...form, [name]: value });
-    }
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -51,13 +48,8 @@ const MyProfile = () => {
     const formData = new FormData();
 
     Object.entries(form).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach(val => formData.append(`${key}[]`, val)); // keep [] for clarity
-      } else {
-        formData.append(key, value);
-      }
+      formData.append(key, value);
     });
-
     if (cv) formData.append('cv', cv);
 
     try {
@@ -72,6 +64,7 @@ const MyProfile = () => {
       const data = await res.json();
       if (data.success) {
         alert('✅ Profile saved successfully!');
+        Cookies.set('profile_filled', 'true', { expires: 30 });
         navigate('/profile-view');
       } else {
         alert('❌ Error saving profile: ' + data.message);
@@ -80,6 +73,12 @@ const MyProfile = () => {
       alert('❌ Upload error: ' + err.message);
     }
   };
+
+  const indianStates = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"];
+
+  const indianCities = ["Mumbai", "Jamshedpur" , "Delhi", "Bengaluru", "Hyderabad", "Ahmedabad", "Chennai", "Kolkata", "Surat", "Pune", "Jaipur", "Lucknow", "Kanpur", "Nagpur", "Indore", "Thane", "Bhopal", "Visakhapatnam", "Patna", "Vadodara", "Ghaziabad"];
+
+  const indianCountries = ["India"];
 
   return (
     <div className="profile-wrapper">
@@ -100,6 +99,7 @@ const MyProfile = () => {
           <li><a href="/contact">Contact Us</a></li>
           <li><button onClick={() => {
             localStorage.removeItem('token');
+            Cookies.remove('profile_filled');
             window.location.href = '/';
           }}>Logout</button></li>
         </ul>
@@ -112,28 +112,37 @@ const MyProfile = () => {
           <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required />
           <input name="phone" placeholder="Phone" value={form.phone} onChange={handleChange} required />
           <input name="dob" type="date" placeholder="DOB" value={form.dob} onChange={handleChange} required />
+
           <select name="experience" value={form.experience} onChange={handleChange} required>
             <option value="">Years of Experience</option>
             {Array.from({ length: 21 }, (_, i) => (
               <option key={i} value={`${i} years`}>{i} years</option>
             ))}
           </select>
+
           <input name="previousCompany" placeholder="Previous Company" value={form.previousCompany} onChange={handleChange} />
           <input name="previousSalary" placeholder="Previous Salary" value={form.previousSalary} onChange={handleChange} />
           <input name="salaryExpectations" placeholder="Expected Salary" value={form.salaryExpectations} onChange={handleChange} />
           <input name="areaOfInterest" placeholder="Area of Interest" value={form.areaOfInterest} onChange={handleChange} />
           <input name="qualifications" placeholder="Qualifications" value={form.qualifications} onChange={handleChange} />
           <input name="skills" placeholder="Skills" value={form.skills} onChange={handleChange} />
-          <select name="languages" multiple value={form.languages} onChange={handleChange}>
-            <option value="English">English</option>
-            <option value="Hindi">Hindi</option>
-            <option value="Bengali">Bengali</option>
-            <option value="Telugu">Telugu</option>
-            <option value="Kannada">Kannada</option>
+          <input name="languages" placeholder="Languages Known" value={form.languages} onChange={handleChange} />
+
+          <select name="city" value={form.city} onChange={handleChange} required>
+            <option value="">Select City</option>
+            {indianCities.map((city, idx) => <option key={idx} value={city}>{city}</option>)}
           </select>
-          <input name="city" placeholder="City" value={form.city} onChange={handleChange} required />
-          <input name="state" placeholder="State" value={form.state} onChange={handleChange} required />
-          <input name="country" placeholder="Country" value={form.country} onChange={handleChange} required />
+
+          <select name="state" value={form.state} onChange={handleChange} required>
+            <option value="">Select State</option>
+            {indianStates.map((state, idx) => <option key={idx} value={state}>{state}</option>)}
+          </select>
+
+          <select name="country" value={form.country} onChange={handleChange} required>
+            <option value="">Select Country</option>
+            {indianCountries.map((country, idx) => <option key={idx} value={country}>{country}</option>)}
+          </select>
+
           <textarea name="address" placeholder="Address" value={form.address} onChange={handleChange} required></textarea>
           <input type="file" name="cv" accept="application/pdf" onChange={(e) => setCV(e.target.files[0])} />
           <button type="submit">{isEdit ? 'Update Profile' : 'Save Profile'}</button>

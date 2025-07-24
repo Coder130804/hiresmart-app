@@ -70,7 +70,7 @@ const Dashboard = () => {
         <ol>
           <li><strong>Sign Up / Login</strong> to create your account.</li>
           <li><strong>Complete Profile</strong> so we know your background.</li>
-          <li><strong>Give AI Interview</strong> – answer 10 questions on camera.</li>
+          <li><strong>Give Interview</strong> – answer 10 questions on camera.</li>
           <li><strong>Our Automated System</strong> reviews your answers automatically.</li>
           <li><strong>See Score & Feedback</strong> – see how you performed.</li>
         </ol>
@@ -89,6 +89,7 @@ const Dashboard = () => {
                 checked={checkboxChecked}
                 onChange={() => setCheckboxChecked(!checkboxChecked)}
               />&nbsp;
+              This website records videos and personal information.
               I understand and accept the data usage policy.
             </label>
             <button

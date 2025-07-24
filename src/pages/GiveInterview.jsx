@@ -1,7 +1,7 @@
-// ✅ Final Updated GiveInterview.jsx
-
+// 📄 src/pages/GiveInterview.jsx
 import React, { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import Cookies from 'js-cookie';
 import './giveinterview.css';
 
@@ -23,19 +23,22 @@ const GiveInterview = () => {
     "What are your salary expectations?",
     "Do you have any questions for us?"
   ]);
-
   const [currentQ, setCurrentQ] = useState(0);
-  const [interviewDone, setInterviewDone] = useState(false);
+  const navigate = useNavigate();
+  const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
-    const given = Cookies.get('interviewGiven');
-    if (given === 'true') {
-      alert("⚠️ You have already given the interview. Please wait for feedback.");
-      window.location.href = '/';
-    } else {
-      Cookies.set('disableNavDuringInterview', 'true');
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded = jwtDecode(token);
+      setUserEmail(decoded.email);
+      const interviewCookie = Cookies.get(`interviewGiven_${decoded.email}`);
+      if (interviewCookie === 'true') {
+        alert('⚠️ You have already given the interview. Please wait for feedback.');
+        navigate('/');
+      }
     }
-  }, []);
+  }, [navigate]);
 
   const startRecording = async () => {
     try {
@@ -73,8 +76,24 @@ const GiveInterview = () => {
             });
 
             const data = await res.json();
-            if (!data.success) alert("❌ Upload failed: " + data.message);
+            if (data.success) {
+              alert("✅ Video uploaded successfully!");
+              if (currentQ === questions.length - 1) {
+                // 🎯 Final question completed
+                Cookies.set(`interviewGiven_${userEmail}`, 'true', { expires: 365 });
 
+                await fetch('https://hiresmart-backend1.onrender.com/api/profile/interview-complete', {
+                  method: 'PATCH',
+                  headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                  }
+                });
+
+                alert("🎉 Interview complete! Thank you.");
+              }
+            } else {
+              alert("❌ Upload failed: " + data.message);
+            }
           } catch (err) {
             alert("❌ Upload error: " + err.message);
           }
@@ -86,7 +105,7 @@ const GiveInterview = () => {
       recorder.start();
       setRecording(true);
     } catch (err) {
-      alert('❌ Error accessing webcam or microphone. Please allow permissions.');
+      alert('❌ Error accessing webcam/microphone.');
     }
   };
 
@@ -102,14 +121,9 @@ const GiveInterview = () => {
       setCurrentQ(currentQ + 1);
       setVideoBlob(null);
     } else {
-      alert("🎉 Interview complete! Thank you.");
-      setInterviewDone(true);
-      Cookies.set('interviewGiven', 'true', { expires: 30 });
-      Cookies.remove('disableNavDuringInterview');
+      // Do not proceed further
     }
   };
-
-  const disableNav = Cookies.get('disableNavDuringInterview') === 'true';
 
   return (
     <>
@@ -122,41 +136,40 @@ const GiveInterview = () => {
           />
           <h2 className="logo">HireSmart</h2>
         </div>
-
         <ul>
-          <li><Link className={disableNav ? 'disabled-link' : ''} to="/">Home</Link></li>
-          <li><Link className={disableNav ? 'disabled-link' : ''} to="/give-interview">Give Interview</Link></li>
-          <li><Link className={disableNav ? 'disabled-link' : ''} to="/score-feedback">Score & Feedback</Link></li>
-          <li><Link className={disableNav ? 'disabled-link' : ''} to="/profile">My Profile</Link></li>
-          <li><Link className={disableNav ? 'disabled-link' : ''} to="/contact">Contact Us</Link></li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/give-interview">Give Interview</Link></li>
+          <li><Link to="/score-feedback">Score & Feedback</Link></li>
+          <li><Link to="/profile">My Profile</Link></li>
+          <li><Link to="/contact">Contact Us</Link></li>
           <li><button onClick={() => {
+            Cookies.remove(`interviewGiven_${userEmail}`);
             localStorage.removeItem('token');
-            Cookies.remove('disableNavDuringInterview');
             window.location.href = '/';
           }}>Logout</button></li>
         </ul>
       </nav>
 
+      {/* 🔷 Interview Section */}
       <div className="interview-page">
-        <h1>🎥 AI Video Interview</h1>
+        <h1>🎤 Automated Video Interview</h1>
         <p><strong>Question {currentQ + 1}:</strong> {questions[currentQ]}</p>
 
-        <div className="video-split">
-          <div className="video-container">
-            <video ref={videoRef} className="video-player" muted></video>
-            <div className="button-row">
-              {!recording && <button onClick={startRecording}>Start Recording</button>}
-              {recording && <button onClick={stopRecording}>Stop Recording</button>}
-              <button onClick={nextQuestion}>Next Question</button>
-            </div>
-          </div>
+        <div className="side-by-side">
+          <video ref={videoRef} className="video-player" muted></video>
 
           {videoBlob && (
             <div className="recorded-preview">
-              <h3>Answer Preview</h3>
+              <h3>Answer Preview:</h3>
               <video className="video-preview" src={URL.createObjectURL(videoBlob)} controls></video>
             </div>
           )}
+        </div>
+
+        <div className="button-row">
+          {!recording && <button onClick={startRecording}>Start Recording</button>}
+          {recording && <button onClick={stopRecording}>Stop Recording</button>}
+          <button onClick={nextQuestion}>Next Question</button>
         </div>
       </div>
     </>
