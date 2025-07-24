@@ -129,7 +129,7 @@ const GiveInterview = () => {
       </nav>
 
       <div className="interview-page">
-        <h1 style={{ fontSize: '2.6rem', marginBottom: '10px' }}>AI Video Interview</h1>
+        <h1 style={{ fontSize: '2.6rem', marginBottom: '10px' }}>Automated Video Interview</h1>
         <p><strong>Question {currentQ + 1}:</strong> {questions[currentQ]}</p>
 
         <div className="interview-video-row">

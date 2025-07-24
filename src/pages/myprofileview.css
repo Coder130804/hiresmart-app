@@ -1,72 +1,60 @@
 /* 📄 src/pages/myprofileview.css */
+
 body, html {
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
-.profile-view {
-  background: rgba(255, 255, 255, 0.95);
+.profile-view-wrapper {
+  background-image: url('https://i.pinimg.com/originals/4a/49/0d/4a490dfcf78c8cfcd169f6aa51c32ea6.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 60px 20px;
+}
+
+.profile-view-container {
+  background-color: rgba(255, 255, 255, 0.97);
   max-width: 800px;
-  margin: 40px auto;
+  margin: 50px auto;
   padding: 30px;
-  border-radius: 14px;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
-  font-size: 1.05rem;
-  line-height: 1.6;
-  color: #222;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.profile-view h2 {
+.profile-view-container h2 {
   text-align: center;
-  margin-bottom: 20px;
-  color: #1e3a8a;
+  color: #333;
+  margin-bottom: 25px;
 }
 
-.profile-view ul {
-  list-style: none;
-  padding-left: 0;
+.profile-detail {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #444;
 }
 
-.profile-view ul li {
-  margin-bottom: 12px;
+.profile-detail strong {
+  display: inline-block;
+  width: 180px;
+  color: #000;
 }
 
-.profile-view a {
-  color: #1e40af;
-  text-decoration: underline;
-}
-
-.profile-view button {
+.edit-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 20px;
   display: block;
-  margin: 30px auto 0;
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #1e3a8a;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 15px 30px;
-  background-color: rgba(0, 0, 0, 0.75);
-  color: white;
-}
-
-.navbar ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-.navbar ul li a,
-.navbar ul li button {
-  text-decoration: none;
-  color: white;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+.edit-btn:hover {
+  background-color: #0056b3;
 }
