@@ -1,9 +1,29 @@
-import React, { useState } from 'react';
+// src/pages/Dashboard.jsx
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import './dashboard.css';
 
 const Dashboard = () => {
   const [consented, setConsented] = useState(false);
+  const [showBanner, setShowBanner] = useState(false);
+  const [checkboxChecked, setCheckboxChecked] = useState(false);
+
+  useEffect(() => {
+    const cookieConsent = Cookies.get('userConsent');
+    if (cookieConsent === 'true') {
+      setConsented(true);
+      setShowBanner(false);
+    } else {
+      setShowBanner(true);
+    }
+  }, []);
+
+  const handleConsentSubmit = () => {
+    Cookies.set('userConsent', 'true', { expires: 30 });
+    setConsented(true);
+    setShowBanner(false);
+  };
 
   return (
     <div className="dashboard-container">
@@ -21,12 +41,13 @@ const Dashboard = () => {
         <ul>
           <li><Link className={consented ? '' : 'disabled-link'} to="/">Home</Link></li>
           <li><Link className={consented ? '' : 'disabled-link'} to="/give-interview">Give Interview</Link></li>
-          <li><Link className={consented ? '' : 'disabled-link'} to="/score-feedback">Score &amp; Feedback</Link></li>
+          <li><Link className={consented ? '' : 'disabled-link'} to="/score-feedback">Score & Feedback</Link></li>
           <li><Link className={consented ? '' : 'disabled-link'} to="/profile">My Profile</Link></li>
-          <li><Link className={consented ? '' : 'disabled-link'} to="/contact">Contact Us</Link></li>
+          <li><Link className={consented ? '' : 'disabled-link'} to="/contact">Contact Us</Link></li>
           <li>
             <button
               onClick={() => {
+                Cookies.remove('userConsent');
                 localStorage.removeItem('token');
                 window.location.href = '/';
               }}
@@ -37,44 +58,53 @@ const Dashboard = () => {
         </ul>
       </nav>
 
-      {/* ───────────── HERO / WELCOME ───────────── */}
+      {/* ───────────── WELCOME ───────────── */}
       <header className="dashboard-welcome">
-        <h1>Welcome&nbsp;to&nbsp;HireSmart</h1>
-        <p>Your AI‑powered interview assistant</p>
+        <h1>Welcome to HireSmart</h1>
+        <p>Your smart interview assistant!🏅</p>
       </header>
 
-      {/* ───────────── HOW‑IT‑WORKS + CONSENT ───────────── */}
+      {/* ───────────── HOW IT WORKS ───────────── */}
       <div className="how-it-works-box">
-        <h2>🛠️ How HireSmart Works</h2>
+        <h2>🛠️ How HireSmart Works</h2>
         <ol>
-          <li><strong>Sign Up / Login</strong> to create your account.</li>
-          <li><strong>Complete Profile</strong> so we understand your background.</li>
+          <li><strong>Sign Up / Login</strong> to create your account.</li>
+          <li><strong>Complete Profile</strong> so we know your background.</li>
           <li><strong>Give AI Interview</strong> – answer 10 questions on camera.</li>
-          <li><strong>AI Reviews</strong> your answers automatically.</li>
-          <li><strong>See Score &amp; Feedback</strong> See how you performed. </li>
+          <li><strong>Our Automated System</strong> reviews your answers automatically.</li>
+          <li><strong>See Score & Feedback</strong> – see how you performed.</li>
         </ol>
-
-        {/* ───── Consent form ───── */}
-        <div className="consent-box">
-          <label>
-            <input
-              type="checkbox"
-              checked={consented}
-              onChange={e => setConsented(e.target.checked)}
-            />
-            &nbsp;I understand that my personal details and interview videos will be captured and stored for analysis.
-          </label>
-          <button
-            className="consent-btn"
-            disabled={!consented}
-            onClick={() => alert('Consent saved! You can now give your personal information and give interview.')}
-          >
-            Submit &amp; Continue
-          </button>
-        </div>
       </div>
+
+      {/* ───────────── COOKIE BANNER ───────────── */}
+      {showBanner && (
+        <div className="cookie-banner">
+          <p>
+            🍪 This website uses cookies to store your profile and interview data for better user experience.
+          </p>
+          <div>
+            <label style={{ fontSize: '0.9rem' }}>
+              <input
+                type="checkbox"
+                checked={checkboxChecked}
+                onChange={() => setCheckboxChecked(!checkboxChecked)}
+              />&nbsp;
+              I understand and accept the data usage policy.
+            </label>
+            <button
+              className="consent-btn"
+              disabled={!checkboxChecked}
+              onClick={handleConsentSubmit}
+            >
+              Submit & Accept
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default Dashboard;
+
+
