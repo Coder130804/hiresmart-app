@@ -1,58 +1,82 @@
-/* 📄 File: src/pages/giveinterview.css */
-
+/* 🔹 Page background and layout */
 .interview-page {
   background-image: url('https://i0.wp.com/connectusrecruitment.co.uk/wp-content/uploads/2024/08/interview-feedback-cover-1.jpg?fit=1000%2C553&ssl=1');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
-  padding: 40px;
+  padding: 30px;
   color: white;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
+/* 🔹 Title and question area */
 .interview-page h1,
-.interview-page p,
-.recorded-preview,
-.button-row {
-  background-color: rgba(0, 0, 0, 0.6); /* semi-transparent black */
+.interview-page p {
+  background-color: rgba(0, 0, 0, 0.65);
   padding: 15px;
   border-radius: 10px;
-  margin-top: 15px;
+  max-width: 700px;
+  margin: 0 auto 20px;
 }
 
-.video-container {
+/* 🔹 Video side-by-side with preview */
+.video-split {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  gap: 30px;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }
 
-.video-player {
-  width: 100%;
-  max-width: 640px;
-  height: 360px;
+/* 🔹 Video container */
+.video-container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 15px;
+  border-radius: 12px;
+}
+
+/* 🔹 Video player */
+.video-player,
+.video-preview {
+  width: 320px;
+  height: 240px;
   background: black;
   border-radius: 10px;
 }
 
+/* 🔹 Buttons */
 .button-row {
-  margin: 20px 0;
+  margin-top: 12px;
 }
 
 .button-row button {
-  margin: 0 10px;
-  padding: 10px 20px;
+  margin: 0 8px;
+  padding: 8px 14px;
   font-weight: bold;
   border: none;
   border-radius: 5px;
+  background: #1e3a8a;
+  color: white;
   cursor: pointer;
 }
 
-.recorded-preview {
-  margin-top: 30px;
+.button-row button:hover {
+  background: #324cc0;
 }
 
-.video-preview {
-  width: 100%;
-  max-width: 640px;
-  height: 360px;
-  border-radius: 10px;
+/* 🔹 Answer preview block */
+.recorded-preview {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 12px;
+  max-width: 350px;
+}
+
+/* 🔹 Navbar disabling style */
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.4;
 }

@@ -1,11 +1,14 @@
-import React, { useRef, useState } from 'react';
+// ✅ Final Updated GiveInterview.jsx
+
+import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import './giveinterview.css';
 
 const GiveInterview = () => {
   const videoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
-  const chunks = useRef([]); // for recording
+  const chunks = useRef([]);
   const [recording, setRecording] = useState(false);
   const [videoBlob, setVideoBlob] = useState(null);
   const [questions] = useState([
@@ -20,7 +23,19 @@ const GiveInterview = () => {
     "What are your salary expectations?",
     "Do you have any questions for us?"
   ]);
+
   const [currentQ, setCurrentQ] = useState(0);
+  const [interviewDone, setInterviewDone] = useState(false);
+
+  useEffect(() => {
+    const given = Cookies.get('interviewGiven');
+    if (given === 'true') {
+      alert("⚠️ You have already given the interview. Please wait for feedback.");
+      window.location.href = '/';
+    } else {
+      Cookies.set('disableNavDuringInterview', 'true');
+    }
+  }, []);
 
   const startRecording = async () => {
     try {
@@ -58,11 +73,8 @@ const GiveInterview = () => {
             });
 
             const data = await res.json();
-            if (data.success) {
-              alert("✅ Video uploaded successfully!");
-            } else {
-              alert("❌ Upload failed: " + data.message);
-            }
+            if (!data.success) alert("❌ Upload failed: " + data.message);
+
           } catch (err) {
             alert("❌ Upload error: " + err.message);
           }
@@ -90,58 +102,62 @@ const GiveInterview = () => {
       setCurrentQ(currentQ + 1);
       setVideoBlob(null);
     } else {
-      alert("Interview complete! Thank you.");
+      alert("🎉 Interview complete! Thank you.");
+      setInterviewDone(true);
+      Cookies.set('interviewGiven', 'true', { expires: 30 });
+      Cookies.remove('disableNavDuringInterview');
     }
   };
+
+  const disableNav = Cookies.get('disableNavDuringInterview') === 'true';
 
   return (
     <>
       <nav className="navbar">
         <div style={{ display: 'flex', alignItems: 'center' }}>
-  <img
-    src="https://static.vecteezy.com/system/resources/thumbnails/017/210/724/small/h-s-letter-logo-design-with-swoosh-design-concept-free-vector.jpg"
-    alt="Logo"
-    style={{ height: '30px', width: '30px', marginRight: '10px', borderRadius: '4px' }}
-  />
-  <h2 className="logo">HireSmart</h2>
-</div>
+          <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/017/210/724/small/h-s-letter-logo-design-with-swoosh-design-concept-free-vector.jpg"
+            alt="Logo"
+            style={{ height: '30px', width: '30px', marginRight: '10px', borderRadius: '4px' }}
+          />
+          <h2 className="logo">HireSmart</h2>
+        </div>
 
         <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/give-interview">Give Interview</Link></li>
-          <li><Link to="/score-feedback">Score & Feedback</Link></li>
-          <li><Link to="/profile">My Profile</Link></li>
-          <li><Link to="/contact">Contact Us</Link></li>
-          <li>
-            <button onClick={() => {
-              localStorage.removeItem('token');
-              window.location.href = '/';
-            }}>Logout</button>
-          </li>
+          <li><Link className={disableNav ? 'disabled-link' : ''} to="/">Home</Link></li>
+          <li><Link className={disableNav ? 'disabled-link' : ''} to="/give-interview">Give Interview</Link></li>
+          <li><Link className={disableNav ? 'disabled-link' : ''} to="/score-feedback">Score & Feedback</Link></li>
+          <li><Link className={disableNav ? 'disabled-link' : ''} to="/profile">My Profile</Link></li>
+          <li><Link className={disableNav ? 'disabled-link' : ''} to="/contact">Contact Us</Link></li>
+          <li><button onClick={() => {
+            localStorage.removeItem('token');
+            Cookies.remove('disableNavDuringInterview');
+            window.location.href = '/';
+          }}>Logout</button></li>
         </ul>
       </nav>
 
-      {/* 🔷 Interview Section */}
       <div className="interview-page">
-        <h1 style={{ fontSize: '3rem', marginBottom: '10px' }}>AI Video Interview</h1>
+        <h1>🎥 AI Video Interview</h1>
         <p><strong>Question {currentQ + 1}:</strong> {questions[currentQ]}</p>
 
-        <div className="video-container">
-          <video ref={videoRef} className="video-player" muted></video>
-        </div>
-
-        <div className="button-row">
-          {!recording && <button onClick={startRecording}>Start Recording</button>}
-          {recording && <button onClick={stopRecording}>Stop Recording</button>}
-          <button onClick={nextQuestion}>Next Question</button>
-        </div>
-
-        {videoBlob && (
-          <div className="recorded-preview">
-            <h3>Answer Preview:</h3>
-            <video className="video-preview" src={URL.createObjectURL(videoBlob)} controls></video>
+        <div className="video-split">
+          <div className="video-container">
+            <video ref={videoRef} className="video-player" muted></video>
+            <div className="button-row">
+              {!recording && <button onClick={startRecording}>Start Recording</button>}
+              {recording && <button onClick={stopRecording}>Stop Recording</button>}
+              <button onClick={nextQuestion}>Next Question</button>
+            </div>
           </div>
-        )}
+
+          {videoBlob && (
+            <div className="recorded-preview">
+              <h3>Answer Preview</h3>
+              <video className="video-preview" src={URL.createObjectURL(videoBlob)} controls></video>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
