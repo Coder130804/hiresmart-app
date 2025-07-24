@@ -1,7 +1,6 @@
 // 📄 src/pages/GiveInterview.jsx
 import React, { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
 import Cookies from 'js-cookie';
 import './giveinterview.css';
 
