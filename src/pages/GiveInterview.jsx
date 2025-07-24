@@ -1,7 +1,6 @@
 // 📄 src/pages/GiveInterview.jsx
 import React, { useRef, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import './giveinterview.css';
 
 const GiveInterview = () => {
@@ -23,28 +22,27 @@ const GiveInterview = () => {
     "Do you have any questions for us?"
   ]);
   const [currentQ, setCurrentQ] = useState(0);
+  const [email, setEmail] = useState('');
+  const [disabledLinks, setDisabledLinks] = useState(true);
   const navigate = useNavigate();
-  const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decoded = jwtDecode(token);
-      setUserEmail(decoded.email);
-      const interviewCookie = Cookies.get(`interviewGiven_${decoded.email}`);
-      if (interviewCookie === 'true') {
-        alert('⚠️ You have already given the interview. Please wait for feedback.');
+    const storedEmail = localStorage.getItem('email');
+    if (storedEmail) {
+      setEmail(storedEmail);
+      const given = localStorage.getItem(`interview_given_${storedEmail}`);
+      if (given) {
+        alert("You have already given the interview. Wait for feedback.");
         navigate('/');
       }
     }
-  }, [navigate]);
+  }, []);
 
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       videoRef.current.srcObject = stream;
       videoRef.current.play();
-
       chunks.current = [];
       const recorder = new MediaRecorder(stream);
 
@@ -61,7 +59,7 @@ const GiveInterview = () => {
         reader.onloadend = async () => {
           const base64data = reader.result.split(',')[1];
           try {
-            const res = await fetch('https://hiresmart-backend1.onrender.com/api/interview/upload', {
+            await fetch('https://hiresmart-backend1.onrender.com/api/interview/upload', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -73,26 +71,6 @@ const GiveInterview = () => {
                 videoBase64: base64data
               })
             });
-
-            const data = await res.json();
-            if (data.success) {
-              alert("✅ Video uploaded successfully!");
-              if (currentQ === questions.length - 1) {
-                // 🎯 Final question completed
-                Cookies.set(`interviewGiven_${userEmail}`, 'true', { expires: 365 });
-
-                await fetch('https://hiresmart-backend1.onrender.com/api/profile/interview-complete', {
-                  method: 'PATCH',
-                  headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                  }
-                });
-
-                alert("🎉 Interview complete! Thank you.");
-              }
-            } else {
-              alert("❌ Upload failed: " + data.message);
-            }
           } catch (err) {
             alert("❌ Upload error: " + err.message);
           }
@@ -104,7 +82,7 @@ const GiveInterview = () => {
       recorder.start();
       setRecording(true);
     } catch (err) {
-      alert('❌ Error accessing webcam/microphone.');
+      alert('❌ Error accessing webcam or microphone. Please allow permissions.');
     }
   };
 
@@ -120,7 +98,9 @@ const GiveInterview = () => {
       setCurrentQ(currentQ + 1);
       setVideoBlob(null);
     } else {
-      // Do not proceed further
+      alert("Interview complete! Thank you.");
+      localStorage.setItem(`interview_given_${email}`, true);
+      setDisabledLinks(false);
     }
   };
 
@@ -135,27 +115,32 @@ const GiveInterview = () => {
           />
           <h2 className="logo">HireSmart</h2>
         </div>
+
         <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/give-interview">Give Interview</Link></li>
-          <li><Link to="/score-feedback">Score & Feedback</Link></li>
-          <li><Link to="/profile">My Profile</Link></li>
-          <li><Link to="/contact">Contact Us</Link></li>
+          <li><Link className={disabledLinks ? 'disabled-link' : ''} to="/">Home</Link></li>
+          <li><Link className={disabledLinks ? 'disabled-link' : ''} to="/score-feedback">Score & Feedback</Link></li>
+          <li><Link className={disabledLinks ? 'disabled-link' : ''} to="/profile">My Profile</Link></li>
+          <li><Link className={disabledLinks ? 'disabled-link' : ''} to="/contact">Contact Us</Link></li>
           <li><button onClick={() => {
-            Cookies.remove(`interviewGiven_${userEmail}`);
-            localStorage.removeItem('token');
+            localStorage.clear();
             window.location.href = '/';
           }}>Logout</button></li>
         </ul>
       </nav>
 
-      {/* 🔷 Interview Section */}
       <div className="interview-page">
-        <h1>🎤 Automated Video Interview</h1>
+        <h1 style={{ fontSize: '2.6rem', marginBottom: '10px' }}>AI Video Interview</h1>
         <p><strong>Question {currentQ + 1}:</strong> {questions[currentQ]}</p>
 
-        <div className="side-by-side">
-          <video ref={videoRef} className="video-player" muted></video>
+        <div className="interview-video-row">
+          <div className="video-container">
+            <video ref={videoRef} className="video-player" muted></video>
+            <div className="button-row">
+              {!recording && <button onClick={startRecording}>Start</button>}
+              {recording && <button onClick={stopRecording}>Stop</button>}
+              <button onClick={nextQuestion}>Next</button>
+            </div>
+          </div>
 
           {videoBlob && (
             <div className="recorded-preview">
@@ -163,12 +148,6 @@ const GiveInterview = () => {
               <video className="video-preview" src={URL.createObjectURL(videoBlob)} controls></video>
             </div>
           )}
-        </div>
-
-        <div className="button-row">
-          {!recording && <button onClick={startRecording}>Start Recording</button>}
-          {recording && <button onClick={stopRecording}>Stop Recording</button>}
-          <button onClick={nextQuestion}>Next Question</button>
         </div>
       </div>
     </>
