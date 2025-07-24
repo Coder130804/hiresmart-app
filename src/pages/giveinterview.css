@@ -1,48 +1,58 @@
-/* 🔹 Page background and layout */
+/* 🔹 Full-screen layout without scroll */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* 🔹 Main interview page styling */
 .interview-page {
   background-image: url('https://i0.wp.com/connectusrecruitment.co.uk/wp-content/uploads/2024/08/interview-feedback-cover-1.jpg?fit=1000%2C553&ssl=1');
   background-size: cover;
   background-position: center;
-  min-height: 100vh;
-  padding: 30px;
+  height: 100vh;
+  padding: 20px;
   color: white;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  box-sizing: border-box;
 }
 
-/* 🔹 Title and question area */
+/* 🔹 Header and question */
 .interview-page h1,
 .interview-page p {
   background-color: rgba(0, 0, 0, 0.65);
   padding: 15px;
   border-radius: 10px;
-  max-width: 700px;
-  margin: 0 auto 20px;
+  max-width: 800px;
+  margin: 0 auto 10px;
 }
 
-/* 🔹 Video side-by-side with preview */
+/* 🔹 Split layout: video + preview side-by-side */
 .video-split {
   display: flex;
   justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-  margin-top: 20px;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 10px;
 }
 
-/* 🔹 Video container */
-.video-container {
+/* 🔹 Video box styling */
+.video-container,
+.recorded-preview {
   background: rgba(0, 0, 0, 0.6);
   padding: 15px;
   border-radius: 12px;
 }
 
-/* 🔹 Video player */
+/* 🔹 Video player & preview size increased */
 .video-player,
 .video-preview {
-  width: 320px;
-  height: 240px;
+  width: 480px;
+  height: 360px;
   background: black;
   border-radius: 10px;
 }
@@ -54,7 +64,7 @@
 
 .button-row button {
   margin: 0 8px;
-  padding: 8px 14px;
+  padding: 10px 20px;
   font-weight: bold;
   border: none;
   border-radius: 5px;
@@ -67,15 +77,7 @@
   background: #324cc0;
 }
 
-/* 🔹 Answer preview block */
-.recorded-preview {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 15px;
-  border-radius: 12px;
-  max-width: 350px;
-}
-
-/* 🔹 Navbar disabling style */
+/* 🔹 Navbar disabling */
 .disabled-link {
   pointer-events: none;
   opacity: 0.4;
