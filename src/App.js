@@ -6,6 +6,7 @@ import ScoreFeedback from './pages/ScoreFeedback';
 import MyProfile from './pages/MyProfile';
 import ContactUs from './pages/ContactUs';
 import MyProfileView from './pages/MyProfileView';
+import LogoutAfterScore from './pages/LogoutAfterScore';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/profile-view" element={<MyProfileView />} />
+        <Route path="/logout-allowed" element={<LogoutAfterScore />} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,51 @@
+.logoutafterscore-page {
+  min-height: 100vh;
+  background-image: url('https://media.istockphoto.com/id/1410902742/photo/people-clapping-hands.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+/* 🔲 Updated semi-transparent box */
+.logout-box {
+  background: rgba(0, 0, 0, 0.5); /* ⬅️ semi-transparent black */
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 600px;
+  color: white;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.logout-box h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+}
+
+.logout-box p {
+  font-size: 1.15rem;
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+/* 🔘 Sign Out Button */
+.signout-btn {
+  margin-top: 25px;
+  background-color: #ffffff;
+  color: #1e3a8a;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.signout-btn:hover {
+  background-color: #dce3ff;
+}

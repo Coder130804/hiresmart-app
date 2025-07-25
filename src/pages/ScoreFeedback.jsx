@@ -73,10 +73,14 @@ const ScoreFeedback = () => {
           <li><a href="/score-feedback">Score & Feedback</a></li>
           <li><a href="/profile">My Profile</a></li>
           <li><a href="/contact">Contact Us</a></li>
-          <li><button onClick={() => {
-            localStorage.removeItem('token');
-            window.location.href = '/';
-          }}>Logout</button></li>
+          <li>
+  <button onClick={() => {
+    // ❌ Don't clear cookies directly
+    window.location.href = '/logout-allowed';
+  }}>
+    Logout
+  </button>
+</li>
         </ul>
       </nav>
 

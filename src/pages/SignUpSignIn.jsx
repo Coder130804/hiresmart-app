@@ -71,7 +71,7 @@ const SignUpSignIn = () => {
       </div>
 
         <p className="app-description">
-          AI Interview Bot for Smart & Fair Hiring
+          Video Interview Bot for Smart & Fair Hiring
         </p>
         <form onSubmit={handleSubmit}>
           <input
