@@ -1,60 +1,98 @@
-/* 📄 src/pages/myprofileview.css */
+/* 📄 src/pages/myprofile.css */
 
 body, html {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow-x: hidden; /* disable horizontal scroll */
 }
 
-.profile-view-wrapper {
+.profile-wrapper {
   background-image: url('https://i.pinimg.com/originals/4a/49/0d/4a490dfcf78c8cfcd169f6aa51c32ea6.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
   padding: 60px 20px;
+  box-sizing: border-box;
+  overflow-y: auto; /* 🔥 this allows vertical scroll */
 }
 
-.profile-view-container {
-  background-color: rgba(255, 255, 255, 0.97);
+.navbar {
+  background-color: #1e1e2f;
+  color: white;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0 0 10px 10px;
+}
+
+.navbar .logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar ul li a, .navbar ul li button {
+  color: white;
+  text-decoration: none;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.form-container {
+  background-color: rgba(255, 255, 255, 0.96);
   max-width: 800px;
   margin: 50px auto;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
 }
 
-.profile-view-container h2 {
+.form-container h2 {
   text-align: center;
   color: #333;
   margin-bottom: 25px;
 }
 
-.profile-detail {
-  margin-bottom: 15px;
+.form-container input,
+.form-container select,
+.form-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
   font-size: 16px;
-  color: #444;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
 }
 
-.profile-detail strong {
-  display: inline-block;
-  width: 180px;
-  color: #000;
+.form-container textarea {
+  resize: vertical;
 }
 
-.edit-btn {
-  background-color: #007bff;
+.form-container button {
+  background-color: #4caf50;
   color: white;
-  padding: 12px 20px;
+  padding: 14px 20px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: bold;
-  margin-top: 20px;
-  display: block;
-  width: 100%;
   font-size: 16px;
+  margin-top: 20px;
+  width: 100%;
+  font-weight: bold;
 }
 
-.edit-btn:hover {
-  background-color: #0056b3;
+.form-container button:hover {
+  background-color: #45a049;
 }

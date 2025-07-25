@@ -9,7 +9,7 @@ const MyProfile = () => {
     name: '', email: '', phone: '', dob: '', experience: '',
     previousCompany: '', previousSalary: '', salaryExpectations: '',
     areaOfInterest: '', qualifications: '', skills: '',
-    languages: '', city: '', state: '', country: '', address: ''
+    languages: '', city: '', state: '', country: '', address: '', jobType: '' 
   });
 
   const [cv, setCV] = useState(null);
@@ -128,6 +128,13 @@ const MyProfile = () => {
           <input name="qualifications" placeholder="Qualifications" value={form.qualifications} onChange={handleChange} />
           <input name="skills" placeholder="Skills" value={form.skills} onChange={handleChange} />
           <input name="languages" placeholder="Languages Known" value={form.languages} onChange={handleChange} />
+
+          <select name="jobType" value={form.jobType} onChange={handleChange} required> 
+            <option value="">Select Job Type</option>
+            <option value="On-site">On-site</option> 
+            <option value="Remote">Remote</option>
+            <option value="Hybrid">Hybrid</option>
+          </select>
 
           <select name="city" value={form.city} onChange={handleChange} required>
             <option value="">Select City</option>
