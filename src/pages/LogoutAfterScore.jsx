@@ -19,7 +19,9 @@ const LogoutAfterScore = () => {
         <h2>🎉 You have reached The End!</h2>
         <p>All your interview data and session details will now be deleted.</p>
         <p>Are you sure you want to <strong>sign out permanently?</strong></p>
-        <button onClick={handleFinalLogout} className="signout-btn">Sign Out</button>
+         <li>
+            <button onClick={() => { Cookies.remove('token'); Cookies.remove('interviewDone'); window.location.href = '/'; }}>SIGNOUT</button>
+          </li>
       </div>
     </div>
   );
