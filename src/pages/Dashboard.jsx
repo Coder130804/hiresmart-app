@@ -45,16 +45,16 @@ const Dashboard = () => {
           <li><Link className={consented ? '' : 'disabled-link'} to="/profile">My Profile</Link></li>
           <li><Link className={consented ? '' : 'disabled-link'} to="/contact">Contact Us</Link></li>
           <li>
-            <button
-              onClick={() => {
-                Cookies.remove('userConsent');
-                localStorage.removeItem('token');
-                window.location.href = '/';
-              }}
-            >
-              Logout
-            </button>
-          </li>
+  <div className="logout-wrapper">
+    <button
+      className="logout-disabled"
+      disabled
+      title="Logout is only allowed after feedback is generated"
+    >
+      Logout
+    </button>
+  </div>
+</li>
         </ul>
       </nav>
 

@@ -22,13 +22,16 @@ const ContactUs = () => {
           <li><Link to="/profile">My Profile</Link></li>
           <li><Link to="/contact">Contact Us</Link></li>
           <li>
-            <button onClick={() => {
-              localStorage.removeItem('token');
-              window.location.href = '/';
-            }}>
-              Logout
-            </button>
-          </li>
+  <div className="logout-wrapper">
+    <button
+      className="logout-disabled"
+      disabled
+      title="Logout is only allowed after feedback is generated"
+    >
+      Logout
+    </button>
+  </div>
+</li>
         </ul>
       </nav>
 

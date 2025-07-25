@@ -46,10 +46,17 @@ const MyProfileView = () => {
           <li><a href="/score-feedback">Score & Feedback</a></li>
           <li><a href="/profile-view" className="active-tab">My Profile</a></li>
           <li><a href="/contact">Contact Us</a></li>
-          <li><button onClick={() => {
-            localStorage.removeItem('token');
-            window.location.href = '/';
-          }}>Logout</button></li>
+          <li>
+  <div className="logout-wrapper">
+    <button
+      className="logout-disabled"
+      disabled
+      title="Logout is only allowed after feedback is generated"
+    >
+      Logout
+    </button>
+  </div>
+</li>
         </ul>
       </nav>
 
