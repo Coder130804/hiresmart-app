@@ -90,8 +90,6 @@ const MyProfileView = () => {
             <p><strong>CV:</strong> <a href={`https://hiresmart-backend1.onrender.com/uploads/${profile.cv}`} target="_blank" rel="noreferrer">Download CV</a></p>
           </div>
         </div>
-
-        <button className="edit-btn" onClick={() => navigate('/profile')}>✏️ Edit Profile</button>
       </div>
     </div>
   );
