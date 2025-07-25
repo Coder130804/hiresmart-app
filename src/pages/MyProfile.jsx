@@ -1,118 +1,100 @@
-// 📄 src/pages/MyProfile.jsx
+// ✅ Updated MyProfile.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './myprofile.css';
 
+const indianStates = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Delhi", "Jammu and Kashmir"];
+
+const indianCities = [
+  "Agartala", "Agra", "Ahmedabad", "Aizawl", "Ajmer", "Aligarh", "Allahabad", "Amritsar", "Asansol", "Aurangabad",
+  "Bangalore", "Bareilly", "Belgaum", "Bhilai", "Bhopal", "Bhubaneswar", "Bikaner", "Bilaspur", "Chandigarh",
+  "Chennai", "Coimbatore", "Cuttack", "Dehradun", "Delhi", "Dhanbad", "Durgapur", "Faridabad", "Ghaziabad", "Goa",
+  "Gorakhpur", "Gulbarga", "Guntur", "Guwahati", "Gwalior", "Hubli", "Hyderabad", "Imphal", "Indore", "Jabalpur",
+  "Jaipur", "Jalandhar", "Jammu", "Jamshedpur", "Jhansi", "Jodhpur", "Kalyan", "Kanpur", "Kochi", "Kolhapur",
+  "Kolkata", "Kozhikode", "Lucknow", "Ludhiana", "Madurai", "Malappuram", "Mangalore", "Meerut", "Moradabad",
+  "Mumbai", "Mysore", "Nagpur", "Nanded", "Nashik", "Navi Mumbai", "Noida", "Patna", "Pimpri-Chinchwad",
+  "Pondicherry", "Prayagraj", "Pune", "Raipur", "Rajkot", "Ranchi", "Rourkela", "Salem", "Siliguri", "Solapur",
+  "Srinagar", "Surat", "Thane", "Thiruvananthapuram", "Tiruchirappalli", "Tirunelveli", "Udaipur", "Vadodara",
+  "Varanasi", "Vasai-Virar", "Vijayawada", "Visakhapatnam", "Warangal"
+];
+
+const countries = ["India"];
+const jobTypes = ["On-site", "Remote", "Hybrid"];
+
 const MyProfile = () => {
   const [form, setForm] = useState({
     name: '', email: '', phone: '', dob: '', experience: '',
     previousCompany: '', previousSalary: '', salaryExpectations: '',
-    areaOfInterest: '', qualifications: '', skills: '',
-    languages: '', city: '', state: '', country: '', address: '', jobType: '' 
+    areaOfInterest: '', qualifications: '', skills: '', languages: '',
+    city: '', state: '', country: '', address: '', jobType: ''
   });
-
   const [cv, setCV] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const email = localStorage.getItem('email');
+    if (Cookies.get(`profileFilled-${email}`)) {
+      navigate('/profile-view');
+      return;
+    }
+
     const fetchProfile = async () => {
       try {
-        const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
+        const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile/email/' + email);
         const data = await res.json();
         if (data && data.name) {
           setForm(data);
           setIsEdit(true);
-          Cookies.set('profile_filled', 'true', { expires: 30 });
-          navigate('/profile-view');
         }
       } catch (err) {
-        console.error('❌ Error fetching profile:', err.message);
+        console.error('Fetch error:', err);
       }
     };
     fetchProfile();
   }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm({ ...form, [name]: value });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-
-    Object.entries(form).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    if (cv) formData.append('cv', cv);
-
     try {
+      const formData = new FormData();
+      Object.entries(form).forEach(([key, value]) => formData.append(key, value));
+      if (cv) formData.append('cv', cv);
+
       const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        },
         body: formData
       });
 
       const data = await res.json();
+
       if (data.success) {
-        alert('✅ Profile saved successfully!');
-        Cookies.set('profile_filled', 'true', { expires: 30 });
+        Cookies.set(`profileFilled-${form.email}`, 'true', { expires: 30 });
+        localStorage.setItem('email', form.email);
+        alert('✅ Profile saved!');
         navigate('/profile-view');
       } else {
-        alert('❌ Error saving profile: ' + data.message);
+        alert('❌ Save failed: ' + data.message);
       }
     } catch (err) {
       alert('❌ Upload error: ' + err.message);
     }
   };
 
-  const indianStates = ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal"];
-
-  const indianCities = [
-  "Agartala", "Agra", "Ahmedabad", "Aizawl", "Ajmer", "Aligarh", "Allahabad", "Amritsar", "Asansol", "Aurangabad","Bangalore", "Bareilly", "Belgaum", "Bhilai", "Bhopal", "Bhubaneswar", "Bikaner", "Bilaspur", "Chandigarh", "Chennai", "Coimbatore", "Cuttack", "Dehradun", "Delhi", "Dhanbad", "Durgapur", "Faridabad", "Ghaziabad", "Goa", "Gorakhpur", "Gulbarga", "Guntur", "Guwahati", "Gwalior", "Hubli", "Hyderabad", "Imphal", "Indore", "Jabalpur", "Jaipur", "Jalandhar", "Jammu", "Jamshedpur", "Jhansi", "Jodhpur", "Kalyan", "Kanpur", "Kochi", "Kolhapur", "Kolkata", "Kozhikode", "Lucknow", "Ludhiana", "Madurai", "Malappuram", "Mangalore", "Meerut", "Moradabad", "Mumbai", "Mysore", "Nagpur", "Nanded", "Nashik", "Navi Mumbai", "Noida", "Patna", "Pimpri-Chinchwad", "Pondicherry", "Prayagraj", "Pune", "Raipur", "Rajkot", "Ranchi", "Rourkela", "Salem", "Siliguri", "Solapur", "Srinagar", "Surat", "Thane", "Thiruvananthapuram", "Tiruchirappalli", "Tirunelveli", "Udaipur", "Vadodara", "Varanasi", "Vasai-Virar", "Vijayawada", "Visakhapatnam", "Warangal"];
-
-  const indianCountries = ["India"];
-
   return (
     <div className="profile-wrapper">
-      <nav className="navbar">
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img
-            src="https://static.vecteezy.com/system/resources/thumbnails/017/210/724/small/h-s-letter-logo-design-with-swoosh-design-concept-free-vector.jpg"
-            alt="Logo"
-            style={{ height: '30px', width: '30px', marginRight: '10px', borderRadius: '4px' }}
-          />
-          <h2 className="logo">HireSmart</h2>
-        </div>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/give-interview">Give Interview</a></li>
-          <li><a href="/score-feedback">Score & Feedback</a></li>
-          <li><a href="/profile">My Profile</a></li>
-          <li><a href="/contact">Contact Us</a></li>
-          <li><button onClick={() => {
-            localStorage.removeItem('token');
-            Cookies.remove('profile_filled');
-            window.location.href = '/';
-          }}>Logout</button></li>
-        </ul>
-      </nav>
-
       <div className="form-container">
         <h2>{isEdit ? '✏️ Edit Profile' : '👤 My Profile'}</h2>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
           <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required />
           <input name="phone" placeholder="Phone" value={form.phone} onChange={handleChange} required />
-          <input name="dob" type="date" placeholder="DOB" value={form.dob} onChange={handleChange} required />
+          <input name="dob" type="date" value={form.dob} onChange={handleChange} required />
 
           <select name="experience" value={form.experience} onChange={handleChange} required>
             <option value="">Years of Experience</option>
@@ -127,7 +109,22 @@ const MyProfile = () => {
           <input name="areaOfInterest" placeholder="Area of Interest" value={form.areaOfInterest} onChange={handleChange} />
           <input name="qualifications" placeholder="Qualifications" value={form.qualifications} onChange={handleChange} />
           <input name="skills" placeholder="Skills" value={form.skills} onChange={handleChange} />
-          <input name="languages" placeholder="Languages Known" value={form.languages} onChange={handleChange} />
+          <input name="languages" placeholder="Languages (comma-separated)" value={form.languages} onChange={handleChange} />
+
+          <select name="city" value={form.city} onChange={handleChange} required>
+            <option value="">Select City</option>
+            {indianCities.map(city => <option key={city} value={city}>{city}</option>)}
+          </select>
+
+          <select name="state" value={form.state} onChange={handleChange} required>
+            <option value="">Select State</option>
+            {indianStates.map(state => <option key={state} value={state}>{state}</option>)}
+          </select>
+
+          <select name="country" value={form.country} onChange={handleChange} required>
+            <option value="">Select Country</option>
+            {countries.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
 
           <select name="jobType" value={form.jobType} onChange={handleChange} required> 
             <option value="">Select Job Type</option>
@@ -136,28 +133,12 @@ const MyProfile = () => {
             <option value="Hybrid">Hybrid</option>
           </select>
 
-          <select name="city" value={form.city} onChange={handleChange} required>
-            <option value="">Select City</option>
-            {indianCities.map((city, idx) => <option key={idx} value={city}>{city}</option>)}
-          </select>
-
-          <select name="state" value={form.state} onChange={handleChange} required>
-            <option value="">Select State</option>
-            {indianStates.map((state, idx) => <option key={idx} value={state}>{state}</option>)}
-          </select>
-
-          <select name="country" value={form.country} onChange={handleChange} required>
-            <option value="">Select Country</option>
-            {indianCountries.map((country, idx) => <option key={idx} value={country}>{country}</option>)}
-          </select>
-
-          <textarea name="address" placeholder="Address" value={form.address} onChange={handleChange} required></textarea>
+          <textarea name="address" placeholder="Address" value={form.address} onChange={handleChange} required />
           <input type="file" name="cv" accept="application/pdf" onChange={(e) => setCV(e.target.files[0])} />
+
           <button type="submit">{isEdit ? 'Update Profile' : 'Save Profile'}</button>
         </form>
       </div>
     </div>
   );
 };
-
-export default MyProfile;

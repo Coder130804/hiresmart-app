@@ -1,10 +1,10 @@
-// ✅ Profile.js (Backend Schema)
+// ✅ Profile.js (Model)
 const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   name: String,
-  email: String,
+  email: { type: String, required: true },
   phone: String,
   dob: String,
   experience: String,
@@ -14,13 +14,13 @@ const profileSchema = new mongoose.Schema({
   areaOfInterest: String,
   qualifications: String,
   skills: String,
-  languages: String, // now a text field
+  languages: String,
   city: String,
   state: String,
   country: String,
+  jobType: String,
   address: String,
-  cvFileName: String,
-  hasGivenInterview: { type: Boolean, default: false }
-});
+  cv: String
+}, { timestamps: true });
 
 module.exports = mongoose.model('Profile', profileSchema);
