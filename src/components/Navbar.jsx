@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Navbar.css'; // style reuse
+import './navbar.css'; // style reuse
 
 const Navbar = () => {
   return (
