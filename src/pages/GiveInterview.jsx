@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './giveinterview.css';
+import Navbar from '../components/Navbar';
 
 import { youthQuestions } from '../data/questions/youth';
 import { mlrQuestions } from '../data/questions/mlr';
@@ -14,7 +15,6 @@ import { eduQuestions } from '../data/questions/edu';
 import { tribalQuestions } from '../data/questions/tribal';
 import { lsdQuestions } from '../data/questions/lsd';
 import { hnQuestions } from '../data/questions/hn';
-import { hrQuestions } from '../data/questions/hr';
 import { volunteerQuestions } from '../data/questions/volunteer';
 import { washQuestions } from '../data/questions/wash';
 
@@ -35,13 +35,13 @@ const themeMap = {
 
 const initialHR = [
   "Tell me about yourself.",
-  "Describe your project mentioned in your CV.",
-  "Tell me about your achievements."
+  "What influenced you to choose this career?",
+  "What are your short term and long term goals? And how do you plan to achieve them?"
 ];
 
 const finalHR = [
-  "What are your salary expectations?",
-  "Do you have any questions for us?"
+  "What experience / projects / knowledge do you have in this field?",
+  "What are your expectations from us?"
 ];
 
 const GiveInterview = () => {
@@ -70,8 +70,10 @@ const GiveInterview = () => {
     videoRef.current.srcObject = stream;
     videoRef.current.play();
     chunks.current = [];
+
     const recorder = new MediaRecorder(stream);
     recorder.ondataavailable = e => { if (e.data.size > 0) chunks.current.push(e.data); };
+
     recorder.onstop = async () => {
       const blob = new Blob(chunks.current, { type: 'video/webm' });
       setVideoBlob(blob);
@@ -95,6 +97,7 @@ const GiveInterview = () => {
       };
       reader.readAsDataURL(blob);
     };
+
     mediaRecorderRef.current = recorder;
     recorder.start();
     setRecording(true);
@@ -129,78 +132,64 @@ const GiveInterview = () => {
     setInterviewStarted(true);
   };
 
-  if (interviewDone) {
-    return (
-      <div className="interview-complete">
-        <h2>You have already given the interview. Please wait for feedback.</h2>
-        <Link to="/">Go to Home</Link>
-      </div>
-    );
-  }
-
-  if (!interviewStarted) {
-    return (
-      <div className="interview-start">
-        <h2>🎯 Select a Job Theme to Start Your Interview</h2>
-        <select value={jobTheme} onChange={(e) => setJobTheme(e.target.value)}>
-          <option value="">-- Select a Theme --</option>
-          {Object.keys(themeMap).map((theme, idx) => (
-            <option key={idx} value={theme}>{theme}</option>
-          ))}
-        </select>
-        <br /><br />
-        <button onClick={handleStartInterview} disabled={!jobTheme}>🎥 Proceed to Interview</button>
-      </div>
-    );
-  }
-
   return (
-    <div className="interview-page">
-      <nav className="navbar">
-        <div className="nav-left">
-          <img src="https://static.vecteezy.com/system/resources/thumbnails/017/210/724/small/h-s-letter-logo-design-with-swoosh-design-concept-free-vector.jpg" alt="Logo" />
-          <h2 className="logo">HireSmart</h2>
+    <>
+      <Navbar />
+
+      {interviewDone ? (
+        <div className="interview-complete">
+          <h2>You have already given the interview. Please wait for feedback.</h2>
+          <Link to="/">Go to Home</Link>
         </div>
-        <ul>
-          <li><Link className="disabled-link" to="/">Home</Link></li>
-          <li><Link className="disabled-link" to="/give-interview">Give Interview</Link></li>
-          <li><Link className="disabled-link" to="/score-feedback">Score & Feedback</Link></li>
-          <li><Link className="disabled-link" to="/profile">My Profile</Link></li>
-          <li><Link className="disabled-link" to="/contact">Contact Us</Link></li>
-          <li>
-            <div className="logout-wrapper">
-              <button className="logout-disabled" disabled title="Logout is only allowed after feedback is generated">Logout</button>
-            </div>
-          </li>
-        </ul>
-      </nav>
+      ) : !interviewStarted ? (
+        <div className="interview-start">
+          <h2>🎯 Select a Job Theme to Start Your Interview</h2>
+          <select value={jobTheme} onChange={(e) => setJobTheme(e.target.value)}>
+            <option value="">-- Select a Theme --</option>
+            {Object.keys(themeMap).map((theme, idx) => (
+              <option key={idx} value={theme}>{theme}</option>
+            ))}
+          </select>
+          <br /><br />
+          <button onClick={handleStartInterview} disabled={!jobTheme}>
+            🎥 Proceed to Interview
+          </button>
+        </div>
+      ) : (
+        <div className="interview-page">
+          <h3 style={{
+            textAlign: 'center',
+            marginTop: '20px',
+            fontSize: '1.4rem',
+            color: '#1e3a8a'
+          }}>
+            🎥 Video Interview In Progress
+          </h3>
 
-      <h3 style={{ textAlign: 'center', marginTop: '20px', fontSize: '1.4rem', color: '#1e3a8a' }}>
-        🎥 Video Interview In Progress
-      </h3>
+          <div className="interview-container">
+            <aside className="live-section">
+              <h3>Question {currentQ + 1} of {questions.length}</h3>
+              <p>{questions[currentQ]}</p>
+              <video ref={videoRef} className="live-video" muted></video>
+              <div className="button-row">
+                {!recording && <button onClick={startRecording}>Start Recording</button>}
+                {recording && <button onClick={stopRecording}>Stop Recording</button>}
+                <button onClick={nextQuestion} disabled={recording || !videoBlob}>Next Question</button>
+              </div>
+            </aside>
 
-      <div className="interview-container">
-        <aside className="live-section">
-          <h3>Question {currentQ + 1} of {questions.length}</h3>
-          <p>{questions[currentQ]}</p>
-          <video ref={videoRef} className="live-video" muted></video>
-          <div className="button-row">
-            {!recording && <button onClick={startRecording}>Start Recording</button>}
-            {recording && <button onClick={stopRecording}>Stop Recording</button>}
-            <button onClick={nextQuestion} disabled={recording || !videoBlob}>Next Question</button>
+            <aside className="preview-section">
+              {videoBlob && (
+                <>
+                  <h3>Answer Preview</h3>
+                  <video className="preview-video" src={URL.createObjectURL(videoBlob)} controls />
+                </>
+              )}
+            </aside>
           </div>
-        </aside>
-
-        <aside className="preview-section">
-          {videoBlob && (
-            <>
-              <h3>Answer Preview</h3>
-              <video className="preview-video" src={URL.createObjectURL(videoBlob)} controls />
-            </>
-          )}
-        </aside>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 };
 

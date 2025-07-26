@@ -101,37 +101,39 @@ body, html {
   margin-top: 20px;
 }
 
-/* Sections */
-.live-section,
+/* Live section */
+.live-section {
+  flex: 1;
+  background: rgba(255,255,255,0.9);
+  color: #222;
+  padding: 12px;
+  border-radius: 8px;
+  max-width: 40%;
+  min-width: 320px;
+  font-size: 0.95rem;
+}
+
+/* Preview section */
 .preview-section {
   flex: 1;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.9);
   color: #222;
-  padding: 16px;
+  padding: 12px;
   border-radius: 8px;
-  max-width: 45%;
+  max-width: 40%;
+  min-width: 320px;
+  font-size: 0.95rem;
+  text-align: center;
 }
 
-.live-section h3,
-.preview-section h3 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  font-size: 1.1rem;
-}
-
-.live-section p {
-  margin-bottom: 12px;
-  font-size: 0.97rem;
-}
-
+/* Video styling */
 .live-video,
 .preview-video {
   width: 100%;
-  height: auto;
+  height: 240px;  /* reduced from full */
   background: black;
   border-radius: 6px;
 }
-
 /* Buttons */
 .button-row {
   margin-top: 12px;

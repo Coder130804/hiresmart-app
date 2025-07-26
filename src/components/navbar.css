@@ -1,0 +1,93 @@
+/* Navbar Wrapper */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 12px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  position: relative;
+  z-index: 1000;
+  border-radius: 6px;
+  margin: 12px;
+}
+
+/* Left Section: Logo + Brand */
+.nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.nav-left img {
+  height: 26px;
+  width: 26px;
+  margin-right: 10px;
+}
+
+.navbar .logo {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+/* Right Section: Nav Items */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.navbar ul li a {
+  color: #444;
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: color 0.2s ease;
+}
+
+.navbar ul li a:hover {
+  color: #1e3a8a;
+}
+
+/* Disabled Link Styling */
+.disabled-link {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Logout Button Styling */
+.logout-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.logout-disabled {
+  background-color: #999;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: not-allowed;
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+.logout-disabled:hover::after {
+  content: "Logout is only allowed after feedback is generated";
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #111215;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  z-index: 10;
+  opacity: 1;
+}
