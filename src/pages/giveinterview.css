@@ -180,7 +180,7 @@ body, html {
 
 .interview-start h2 {
   font-size: 1.5rem;
-  color: #0a1a3a; /* updated for better contrast */
+  color: #fff;
   margin-bottom: 30px;
   font-weight: 600;
 }

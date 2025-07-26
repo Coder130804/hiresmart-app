@@ -54,9 +54,12 @@ const MyProfile = () => {
       if (cv) formData.append('cv', cv);
 
       const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
-        method: 'POST',
-        body: formData
-      });
+      method: 'POST',
+      headers: {
+      Authorization: `Bearer ${Cookies.get('token')}`
+     },
+     body: formData
+     });
 
       const data = await res.json();
 

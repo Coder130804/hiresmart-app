@@ -5,6 +5,7 @@ const Profile = require('../models/Profile');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const auth = require('../middleware/auth');
 
 // Ensure uploads folder exists
 const uploadDir = path.join(__dirname, '../uploads');
@@ -35,12 +36,18 @@ router.get('/email/:email', async (req, res) => {
 });
 
 // 📤 Save or update profile
-router.post('/', upload.single('cv'), async (req, res) => {
+outer.post('/', auth, upload.single('cv'), async (req, res) => {
   try {
     const profileData = req.body;
-    if (req.file) profileData.cv = req.file.filename;
 
-    let profile = await Profile.findOne({ email: profileData.email });
+    // 🔑 FIX: Attach userId from JWT payload
+    profileData.userId = req.user.id;
+
+    if (req.file) {
+      profileData.cv = req.file.filename;
+    }
+
+    let profile = await Profile.findOne({ userId: profileData.userId });
     if (profile) {
       profile.set(profileData);
     } else {
@@ -49,6 +56,7 @@ router.post('/', upload.single('cv'), async (req, res) => {
 
     await profile.save();
     res.json({ success: true });
+
   } catch (err) {
     console.error('Error saving profile:', err.message);
     res.status(500).json({ success: false, message: err.message });
