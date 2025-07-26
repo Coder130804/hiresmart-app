@@ -207,3 +207,12 @@ body, html {
   background: #ccc;
   cursor: not-allowed;
 }
+
+.theme-box {
+  background-color: rgba(0, 0, 0, 0.2); /* semi-transparent black */
+  padding: 40px 30px;
+  border-radius: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.8);
+}

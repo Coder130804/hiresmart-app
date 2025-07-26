@@ -143,18 +143,20 @@ const GiveInterview = () => {
         </div>
       ) : !interviewStarted ? (
         <div className="interview-start">
-          <h2>🎯 Select a Job Theme to Start Your Interview</h2>
-          <select value={jobTheme} onChange={(e) => setJobTheme(e.target.value)}>
-            <option value="">-- Select a Theme --</option>
-            {Object.keys(themeMap).map((theme, idx) => (
-              <option key={idx} value={theme}>{theme}</option>
-            ))}
-          </select>
-          <br /><br />
-          <button onClick={handleStartInterview} disabled={!jobTheme}>
-            🎥 Proceed to Interview
-          </button>
-        </div>
+        <div className="theme-box">
+        <h2>🎯 Select a Job Theme to Start Your Interview</h2>
+        <select value={jobTheme} onChange={(e) => setJobTheme(e.target.value)}>
+        <option value="">-- Select a Theme --</option>
+        {Object.keys(themeMap).map((theme, idx) => (
+          <option key={idx} value={theme}>{theme}</option>
+        ))}
+       </select>
+       <br /><br />
+       <button onClick={handleStartInterview} disabled={!jobTheme}>
+        🎥 Proceed to Interview
+       </button>
+       </div>
+       </div>
       ) : (
         <div className="interview-page">
           <h3 style={{
@@ -189,6 +191,9 @@ const GiveInterview = () => {
           </div>
         </div>
       )}
+      <div className="footer">
+          &copy; {new Date().getFullYear()} HireSmart. All Rights Reserved.
+        </div>
     </>
   );
 };
