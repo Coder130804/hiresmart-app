@@ -5,19 +5,19 @@ import Cookies from 'js-cookie';
 import './giveinterview.css';
 import Navbar from '../components/Navbar';
 
-import { drcrQuestions } from '../../../shared/questions/drcr';
-import { eduQuestions } from '../../../shared/questions/edu';
-import { genderQuestions } from '../../../shared/questions/gender';
-import { hnQuestions } from '../../../shared/questions/hn';
-import { hrQuestions } from '../../../shared/questions/hr';
-import { infraQuestions } from '../../../shared/questions/infra';
-import { lsdQuestions } from '../../../shared/questions/lsd';
-import { merQuestions } from '../../../shared/questions/mer';
-import { mlrQuestions } from '../../../shared/questions/mlr';
-import { tribalQuestions } from '../../../shared/questions/tribal';
-import { volunteerQuestions } from '../../../shared/questions/volunteer';
-import { washQuestions } from '../../../shared/questions/wash';
-import { youthQuestions } from '../../../shared/questions/youth';
+import { drcrQuestions } from '../questions/drcr';
+import { eduQuestions } from '../questions/edu';
+import { genderQuestions } from '../questions/gender';
+import { hnQuestions } from '../questions/hn';
+import { hrQuestions } from '../questions/hr';
+import { infraQuestions } from '../questions/infra';
+import { lsdQuestions } from '../questions/lsd';
+import { merQuestions } from '../questions/mer';
+import { mlrQuestions } from '../questions/mlr';
+import { tribalQuestions } from '../questions/tribal';
+import { volunteerQuestions } from '../questions/volunteer';
+import { washQuestions } from '../questions/wash';
+import { youthQuestions } from '../questions/youth';
 
 const themeMap = {
   "Education & Learning": eduQuestions,
