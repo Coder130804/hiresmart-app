@@ -87,7 +87,7 @@ const GiveInterview = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${Cookies.get('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
           },
           body: JSON.stringify({
             question: questions[currentQ],
@@ -139,7 +139,7 @@ const GiveInterview = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
           jobTheme,
@@ -209,9 +209,7 @@ const GiveInterview = () => {
           </div>
         </div>
       )}
-      <div className="footer">
-        &copy; {new Date().getFullYear()} HireSmart. All Rights Reserved.
-      </div>
+     
     </>
   );
 };

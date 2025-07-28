@@ -76,16 +76,13 @@ const ScoreFeedback = () => {
           <li><a href="/profile">My Profile</a></li>
           <li><a href="/contact">Contact Us</a></li>
           <li>
-            <button
-              onClick={() => window.location.href = '/logout-allowed'}
-              disabled={!allowLogout}
-              style={{
-                opacity: allowLogout ? 1 : 0.5,
-                cursor: allowLogout ? 'pointer' : 'not-allowed'
-              }}
-            >
-              Logout
-            </button>
+          <button
+            onClick={() => window.location.href = '/logout-allowed'}
+            disabled={!feedback || error}
+            style={{ opacity: (!feedback || error) ? 0.4 : 1 }}
+          >
+          Logout
+          </button>
           </li>
         </ul>
       </nav>
