@@ -5,18 +5,19 @@ import Cookies from 'js-cookie';
 import './giveinterview.css';
 import Navbar from '../components/Navbar';
 
-import { youthQuestions } from '../data/questions/youth';
-import { mlrQuestions } from '../data/questions/mlr';
-import { merQuestions } from '../data/questions/mer';
-import { infraQuestions } from '../data/questions/infra';
-import { drcrQuestions } from '../data/questions/drcr';
-import { genderQuestions } from '../data/questions/gender';
-import { eduQuestions } from '../data/questions/edu';
-import { tribalQuestions } from '../data/questions/tribal';
-import { lsdQuestions } from '../data/questions/lsd';
-import { hnQuestions } from '../data/questions/hn';
-import { volunteerQuestions } from '../data/questions/volunteer';
-import { washQuestions } from '../data/questions/wash';
+import { drcrQuestions } from '../../../shared/questions/drcr';
+import { eduQuestions } from '../../../shared/questions/edu';
+import { genderQuestions } from '../../../shared/questions/gender';
+import { hnQuestions } from '../../../shared/questions/hn';
+import { hrQuestions } from '../../../shared/questions/hr';
+import { infraQuestions } from '../../../shared/questions/infra';
+import { lsdQuestions } from '../../../shared/questions/lsd';
+import { merQuestions } from '../../../shared/questions/mer';
+import { mlrQuestions } from '../../../shared/questions/mlr';
+import { tribalQuestions } from '../../../shared/questions/tribal';
+import { volunteerQuestions } from '../../../shared/questions/volunteer';
+import { washQuestions } from '../../../shared/questions/wash';
+import { youthQuestions } from '../../../shared/questions/youth';
 
 const themeMap = {
   "Education & Learning": eduQuestions,
@@ -60,9 +61,7 @@ const GiveInterview = () => {
 
   useEffect(() => {
     const done = Cookies.get('interviewDone');
-    if (done === 'true') {
-      setInterviewDone(true);
-    }
+    if (done === 'true') setInterviewDone(true);
   }, []);
 
   const startRecording = async () => {
@@ -72,7 +71,9 @@ const GiveInterview = () => {
     chunks.current = [];
 
     const recorder = new MediaRecorder(stream);
-    recorder.ondataavailable = e => { if (e.data.size > 0) chunks.current.push(e.data); };
+    recorder.ondataavailable = e => {
+      if (e.data.size > 0) chunks.current.push(e.data);
+    };
 
     recorder.onstop = async () => {
       const blob = new Blob(chunks.current, { type: 'video/webm' });
@@ -121,15 +122,37 @@ const GiveInterview = () => {
     }
   };
 
-  const handleStartInterview = () => {
-    const selectedThemeQs = [...themeMap[jobTheme]]
+  const handleStartInterview = async () => {
+    const domainQuestions = [...themeMap[jobTheme]]
       .sort(() => 0.5 - Math.random())
       .slice(0, 5)
       .map(q => typeof q === 'string' ? q : q.question);
 
-    const fullQs = [...initialHR, ...selectedThemeQs, ...finalHR];
+    const fullQs = [...initialHR, ...domainQuestions, ...finalHR];
     setQuestions(fullQs);
     setInterviewStarted(true);
+
+    // 🔥 Save to backend for analysis
+    try {
+      const token = Cookies.get('token');
+      const response = await fetch('https://hiresmart-backend1.onrender.com/api/interview/session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          jobTheme,
+          questions: fullQs
+        })
+      });
+
+      const data = await response.json();
+      if (!data.success) console.error('❌ Failed to save session:', data.message);
+      else console.log('✅ Questions saved to backend');
+    } catch (err) {
+      console.error('❌ Error saving session:', err.message);
+    }
   };
 
   return (
@@ -143,28 +166,23 @@ const GiveInterview = () => {
         </div>
       ) : !interviewStarted ? (
         <div className="interview-start">
-        <div className="theme-box">
-        <h2>🎯 Select a Job Theme to Start Your Interview</h2>
-        <select value={jobTheme} onChange={(e) => setJobTheme(e.target.value)}>
-        <option value="">-- Select a Theme --</option>
-        {Object.keys(themeMap).map((theme, idx) => (
-          <option key={idx} value={theme}>{theme}</option>
-        ))}
-       </select>
-       <br /><br />
-       <button onClick={handleStartInterview} disabled={!jobTheme}>
-        🎥 Proceed to Interview
-       </button>
-       </div>
-       </div>
+          <div className="theme-box">
+            <h2>🎯 Select a Job Theme to Start Your Interview</h2>
+            <select value={jobTheme} onChange={(e) => setJobTheme(e.target.value)}>
+              <option value="">-- Select a Theme --</option>
+              {Object.keys(themeMap).map((theme, idx) => (
+                <option key={idx} value={theme}>{theme}</option>
+              ))}
+            </select>
+            <br /><br />
+            <button onClick={handleStartInterview} disabled={!jobTheme}>
+              🎥 Proceed to Interview
+            </button>
+          </div>
+        </div>
       ) : (
         <div className="interview-page">
-          <h3 style={{
-            textAlign: 'center',
-            marginTop: '20px',
-            fontSize: '1.4rem',
-            color: '#1e3a8a'
-          }}>
+          <h3 style={{ textAlign: 'center', marginTop: '20px', fontSize: '1.4rem', color: '#1e3a8a' }}>
             🎥 Video Interview In Progress
           </h3>
 
@@ -192,8 +210,8 @@ const GiveInterview = () => {
         </div>
       )}
       <div className="footer">
-          &copy; {new Date().getFullYear()} HireSmart. All Rights Reserved.
-        </div>
+        &copy; {new Date().getFullYear()} HireSmart. All Rights Reserved.
+      </div>
     </>
   );
 };

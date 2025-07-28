@@ -2,8 +2,9 @@
 
 const express = require('express');
 const router = express.Router();
-const { analyzeInterview } = require('../controllers/aiAnalysisController');
+const { analyzeInterview } = require('../controllers/aiFeedbackController');
+const authMiddleware = require('../middleware/auth');
 
-router.get('/analyze', analyzeInterview);
+router.get('/feedback', authMiddleware, analyzeInterview);
 
 module.exports = router;

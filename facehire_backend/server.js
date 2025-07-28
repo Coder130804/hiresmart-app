@@ -26,10 +26,12 @@ mongoose.connect(process.env.MONGO_URI, {
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const interviewRoutes = require('./routes/interviewRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/interview', interviewRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Optional root route for test
 app.get('/', (req, res) => {
