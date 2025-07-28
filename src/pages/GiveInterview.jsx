@@ -142,9 +142,14 @@ const GiveInterview = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-          jobTheme,
-          questions: fullQs
-        })
+  jobTheme,
+  questions: fullQs.map(q => ({
+    question: q,
+    theme: jobTheme,
+    scoreMode: "keyword",       // Or whatever you're using
+    keywords: []                // You can fill this dynamically if needed
+  }))
+})
       });
 
       const data = await response.json();
