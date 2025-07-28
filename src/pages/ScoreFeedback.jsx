@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './scorefeedback.css';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
-import Cookies from 'js-cookie';
 
 const ScoreFeedback = () => {
   const [feedback, setFeedback] = useState(null);
@@ -10,9 +9,9 @@ const ScoreFeedback = () => {
   const [allowLogout, setAllowLogout] = useState(false);
 
   useEffect(() => {
-    const token = Cookies.get('token');
+    const token = localStorage.getItem('token');
     if (!token) {
-      setError('Not authenticated!');
+      setError('⚠️ Please login first to view feedback.');
       return;
     }
 
@@ -29,22 +28,30 @@ const ScoreFeedback = () => {
 
         const data = await res.json();
 
-        if (data.totalScore !== undefined && data.results?.length > 0) {
+        if (data.success && data.totalScore !== undefined && data.results?.length > 0) {
           setFeedback(data);
           setAllowLogout(true);
         } else {
-          setError('Feedback not available yet. Try again later.');
+          setError('🕐 Feedback not available yet. Please complete your interview first.');
         }
       } catch (err) {
         console.error('Feedback fetch error:', err);
-        setError('Something went wrong while loading feedback.');
+        setError('❌ Error while loading feedback. Try again later.');
       }
     };
 
     fetchFeedback();
   }, []);
 
-  if (error) return <div className="feedback-box"><p>{error}</p></div>;
+  if (error) {
+    return (
+      <div className="feedback-box">
+        <p>{error}</p>
+        <p><a href="/give-interview">👉 Give Interview Now</a></p>
+      </div>
+    );
+  }
+
   if (!feedback) return <div className="feedback-box"><p>Loading...</p></div>;
 
   const chartData = {
@@ -76,13 +83,16 @@ const ScoreFeedback = () => {
           <li><a href="/profile">My Profile</a></li>
           <li><a href="/contact">Contact Us</a></li>
           <li>
-          <button
-            onClick={() => window.location.href = '/logout-allowed'}
-            disabled={!feedback || error}
-            style={{ opacity: (!feedback || error) ? 0.4 : 1 }}
-          >
-          Logout
-          </button>
+            <button
+              onClick={() => {
+                localStorage.removeItem('token');
+                window.location.href = '/logout-allowed';
+              }}
+              disabled={!feedback && error}
+              style={{ opacity: (!feedback && error) ? 0.4 : 1 }}
+            >
+              Logout
+            </button>
           </li>
         </ul>
       </nav>
