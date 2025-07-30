@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './scorefeedback.css';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
+import Navbar from '../components/Navbar'; // ✅ Use existing Navbar with logo + disabled links
 
 const ScoreFeedback = () => {
   const [feedback, setFeedback] = useState(null);
@@ -43,85 +44,61 @@ const ScoreFeedback = () => {
     fetchFeedback();
   }, []);
 
-  if (error) {
-    return (
-      <div className="feedback-box">
-        <p>{error}</p>
-        <p><a href="/give-interview">👉 Give Interview Now</a></p>
-      </div>
-    );
-  }
-
-  if (!feedback) return <div className="feedback-box"><p>Loading...</p></div>;
-
-  const chartData = {
-    labels: ['Score', 'Remaining'],
-    datasets: [
-      {
-        data: [feedback.totalScore, 10 - feedback.totalScore],
-        backgroundColor: ['#4caf50', '#ddd'],
-      },
-    ],
-  };
-
   return (
     <div className="score-feedback-page">
-      <nav className="navbar">
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <img
-            src="https://static.vecteezy.com/system/resources/thumbnails/017/210/724/small/h-s-letter-logo-design-with-swoosh-design-concept-free-vector.jpg"
-            alt="Logo"
-            style={{ height: '30px', width: '30px', marginRight: '10px', borderRadius: '4px' }}
-          />
-          <h2 className="logo">HireSmart</h2>
-        </div>
+      {/* ✅ Always display Navbar */}
+      <Navbar allowLogout={allowLogout} />
 
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/give-interview">Give Interview</a></li>
-          <li><a href="/score-feedback">Score & Feedback</a></li>
-          <li><a href="/profile">My Profile</a></li>
-          <li><a href="/contact">Contact Us</a></li>
-          <li>
-            <button
-              onClick={() => {
-                localStorage.removeItem('token');
-                window.location.href = '/logout-allowed';
-              }}
-              disabled={!feedback && error}
-              style={{ opacity: (!feedback && error) ? 0.4 : 1 }}
-            >
-              Logout
-            </button>
-          </li>
-        </ul>
-      </nav>
-
+      {/* ✅ Content based on feedback */}
       <div className="feedback-box">
-        <h1>📊 Your Interview Feedback</h1>
+        {error && (
+          <>
+            <p>{error}</p>
+            <p><a href="/give-interview">👉 Give Interview Now</a></p>
+          </>
+        )}
 
-        <div className="chart-container">
-          <Pie data={chartData} options={{ maintainAspectRatio: false }} />
-        </div>
+        {!error && !feedback && <p>Loading...</p>}
 
-        <p className="summary">
-          💡 AI Summary: <strong>{feedback.summary}</strong><br />
-          🧮 Score: <strong>{feedback.totalScore} / 10</strong><br />
-          📈 Percentage: <strong>{(feedback.totalScore * 10).toFixed(1)}%</strong>
-        </p>
+        {feedback && (
+          <>
+            <h1>📊 Your Interview Feedback</h1>
 
-        <div className="question-feedback">
-          {feedback.results.map((item, idx) => (
-            <div key={idx} style={{ marginBottom: '25px' }}>
-              <p><strong>Q{idx + 1}: {item.question}</strong></p>
-              <p>🗣️ Your Answer: <em>{item.transcript || "No answer detected"}</em></p>
-              <p>🔑 Matched Keywords: {item.matchedKeywords?.length > 0 ? item.matchedKeywords.join(', ') : 'None'}</p>
-              <p>✅ Score: <strong>{item.score}</strong> / 1</p>
+            <div className="chart-container">
+              <Pie
+                data={{
+                  labels: ['Score', 'Remaining'],
+                  datasets: [
+                    {
+                      data: [feedback.totalScore, 10 - feedback.totalScore],
+                      backgroundColor: ['#4caf50', '#ddd'],
+                    },
+                  ],
+                }}
+                options={{ maintainAspectRatio: false }}
+              />
             </div>
-          ))}
-        </div>
 
-        <footer>© All Rights Reserved</footer>
+            <p className="summary">
+              💡 AI Summary: <strong>{feedback.summary}</strong><br />
+              🧮 Score: <strong>{feedback.totalScore} / 10</strong><br />
+              📈 Percentage: <strong>{(feedback.totalScore * 10).toFixed(1)}%</strong>
+            </p>
+
+            <div className="question-feedback">
+              {feedback.results.map((item, idx) => (
+                <div key={idx} style={{ marginBottom: '25px' }}>
+                  <p><strong>Q{idx + 1}: {item.question}</strong></p>
+                  <p>🗣️ Your Answer: <em>{item.transcript || "No answer detected"}</em></p>
+                  <p>🔑 Matched Keywords: {item.matchedKeywords?.length > 0 ? item.matchedKeywords.join(', ') : 'None'}</p>
+                  <p>✅ Score: <strong>{item.score}</strong> / 1</p>
+                </div>
+              ))}
+            </div>
+
+            <footer>© All Rights Reserved</footer>
+          </>
+        )}
       </div>
     </div>
   );

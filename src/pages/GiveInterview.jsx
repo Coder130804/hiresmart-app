@@ -1,4 +1,4 @@
-// src/pages/GiveInterview.jsx
+// ✅ MODIFIED GiveInterview.jsx with Transcript Extraction (No UI Changes)
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -49,8 +49,11 @@ const GiveInterview = () => {
   const videoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const chunks = useRef([]);
+  const recognitionRef = useRef(null);
+
   const [recording, setRecording] = useState(false);
   const [videoBlob, setVideoBlob] = useState(null);
+  const [transcript, setTranscript] = useState('');
 
   const [interviewDone, setInterviewDone] = useState(false);
   const [interviewStarted, setInterviewStarted] = useState(false);
@@ -92,7 +95,8 @@ const GiveInterview = () => {
           body: JSON.stringify({
             question: questions[currentQ],
             videoType: 'video/webm',
-            videoBase64: base64data
+            videoBase64: base64data,
+            transcript // NEW: send transcript
           })
         });
       };
@@ -102,16 +106,33 @@ const GiveInterview = () => {
     mediaRecorderRef.current = recorder;
     recorder.start();
     setRecording(true);
+
+    // Start browser-based speech recognition
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = false;
+    recognition.lang = 'en-US';
+
+    recognition.onresult = e => {
+      const text = Array.from(e.results).map(r => r[0].transcript).join(' ');
+      setTranscript(text);
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
   };
 
   const stopRecording = () => {
     if (mediaRecorderRef.current && recording) {
       mediaRecorderRef.current.stop();
       setRecording(false);
+      if (recognitionRef.current) recognitionRef.current.stop();
     }
   };
 
   const nextQuestion = () => {
+    setTranscript('');
     if (currentQ < questions.length - 1) {
       setCurrentQ(currentQ + 1);
       setVideoBlob(null);
@@ -132,9 +153,7 @@ const GiveInterview = () => {
     setQuestions(fullQs);
     setInterviewStarted(true);
 
-    // 🔥 Save to backend for analysis
     try {
-      const token = Cookies.get('token');
       const response = await fetch('https://hiresmart-backend1.onrender.com/api/interview/session', {
         method: 'POST',
         headers: {
@@ -142,14 +161,14 @@ const GiveInterview = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
-  jobTheme,
-  questions: fullQs.map(q => ({
-    question: q,
-    theme: jobTheme,
-    scoreMode: "keyword",       // Or whatever you're using
-    keywords: []                // You can fill this dynamically if needed
-  }))
-})
+          jobTheme,
+          questions: fullQs.map(q => ({
+            question: q,
+            theme: jobTheme,
+            scoreMode: "keyword",
+            keywords: []
+          }))
+        })
       });
 
       const data = await response.json();
@@ -163,7 +182,7 @@ const GiveInterview = () => {
   return (
     <>
       <Navbar />
-
+      {/* Existing UI untouched */}
       {interviewDone ? (
         <div className="interview-complete">
           <h2>You have already given the interview. Please wait for feedback.</h2>
@@ -180,9 +199,7 @@ const GiveInterview = () => {
               ))}
             </select>
             <br /><br />
-            <button onClick={handleStartInterview} disabled={!jobTheme}>
-              🎥 Proceed to Interview
-            </button>
+            <button onClick={handleStartInterview} disabled={!jobTheme}>🎥 Proceed to Interview</button>
           </div>
         </div>
       ) : (
@@ -214,7 +231,6 @@ const GiveInterview = () => {
           </div>
         </div>
       )}
-     
     </>
   );
 };

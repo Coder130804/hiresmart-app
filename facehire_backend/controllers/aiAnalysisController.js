@@ -3,6 +3,7 @@ const tmp = require('tmp-promise');
 const jwt = require('jsonwebtoken');
 const { Configuration, OpenAIApi } = require('openai');
 const Interview = require('../models/Interview');
+const InterviewSession = require('../models/InterviewSession');
 
 // ✅ Import ALL question files
 const { drcrQuestions } = require('../../shared/questions/drcr');
@@ -19,7 +20,7 @@ const { volunteerQuestions } = require('../../shared/questions/volunteer');
 const { washQuestions } = require('../../shared/questions/wash');
 const { youthQuestions } = require('../../shared/questions/youth');
 
-// ✅ Combine all questions
+// ✅ Combine all questions and flatten
 const allQuestionSets = [
   ...drcrQuestions,
   ...eduQuestions,
@@ -36,80 +37,80 @@ const allQuestionSets = [
   ...youthQuestions
 ];
 
-// ✅ Whisper Setup
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
+// ✅ Utility function to match keywords
+const matchKeywords = (answer, keywords) => {
+  const matched = [];
+  const lowerAnswer = answer.toLowerCase();
+  for (const keyword of keywords) {
+    if (lowerAnswer.includes(keyword.toLowerCase())) {
+      matched.push(keyword);
+    }
+  }
+  return matched;
+};
 
-// ✅ Whisper feedback route
-exports.analyzeInterview = async (req, res) => {
+// ✅ Feedback handler
+const getFeedback = async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (!token) return res.status(401).json({ message: 'Unauthorized' });
+    const { interviewSessionId } = req.body;
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id;
+    if (!interviewSessionId) {
+      return res.status(400).json({ success: false, message: 'Interview Session ID is required' });
+    }
 
-    const interviews = await Interview.find({ userId });
-    if (!interviews.length) return res.status(404).json({ message: 'No interview found' });
+    const interviewSession = await InterviewSession.findById(interviewSessionId);
+    if (!interviewSession) {
+      return res.status(404).json({ success: false, message: 'Interview session not found' });
+    }
 
     const results = [];
+    let totalScore = 0;
 
-    for (const entry of interviews) {
-      const { question, video, videoType } = entry;
+    for (const q of interviewSession.questions) {
+      const answer = q.transcript || '';
+      const questionText = q.question;
 
-      // Write video buffer to temp file
-      const tmpFile = await tmp.file({ postfix: '.' + videoType.split('/')[1] });
-      fs.writeFileSync(tmpFile.path, video);
+      // ✅ Find the question's keyword list
+      const matchedQuestion = allQuestionSets.find(qObj => qObj.question === questionText);
 
-      // Whisper transcription
-      const transcriptResponse = await openai.createTranscription(
-        fs.createReadStream(tmpFile.path),
-        'whisper-1'
-      );
-
-      const transcript = transcriptResponse?.data?.text || '';
-
-      // Find matching question (any theme)
-      const qData = allQuestionSets.find(q => q.question === question);
-      let matchedKeywords = [];
-      let score = 0;
-
-      if (qData) {
-        const transcriptLower = transcript.toLowerCase();
-        matchedKeywords = qData.keywords.filter(k =>
-          transcriptLower.includes(k.toLowerCase())
-        );
-        score = matchedKeywords.length;
+      let keywords = [];
+      if (matchedQuestion && matchedQuestion.keywords) {
+        keywords = matchedQuestion.keywords;
       }
 
+      const matchedKeywords = matchKeywords(answer, keywords);
+      const score = keywords.length > 0 ? Math.round((matchedKeywords.length / keywords.length) * 100) : 0;
+
       results.push({
-        question,
-        transcript,
+        question: questionText,
+        transcript: answer,
         matchedKeywords,
         score
       });
 
-      await tmpFile.cleanup();
+      totalScore += score;
     }
 
-    const total = results.reduce((acc, r) => acc + r.score, 0);
-    const maxScore = results.length * 10;
-    const finalScore = Math.min(10, Math.round((total / maxScore) * 10));
-    const summary = finalScore >= 8
-      ? "🌟 Excellent communication & relevance"
-      : finalScore >= 5
-      ? "🙂 Decent answers, scope for clarity"
-      : "⚠️ Needs stronger alignment with question keywords";
+    const avgScore = results.length > 0 ? Math.round(totalScore / results.length) : 0;
+
+    const summary =
+      avgScore >= 80
+        ? "Excellent performance! You covered most of the key points."
+        : avgScore >= 50
+        ? "Good effort! You mentioned some important points, but there's room for improvement."
+        : "Needs improvement. Try to include more relevant details next time.";
 
     res.json({
-      finalScore,
+      success: true,
+      totalScore: avgScore,
       summary,
-      answers: results
+      results
     });
-  } catch (err) {
-    console.error("Whisper AI analysis error:", err.message);
-    res.status(500).json({ message: "Internal server error", error: err.message });
+
+  } catch (error) {
+    console.error('Error in getFeedback:', error);
+    res.status(500).json({ success: false, message: 'Server error while generating feedback.' });
   }
 };
+
+module.exports = { getFeedback };

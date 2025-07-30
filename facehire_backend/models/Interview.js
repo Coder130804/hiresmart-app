@@ -18,6 +18,14 @@ const InterviewSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  transcript: {
+    type: String,
+    required: false, // optional for now
+  },
+  score: {
+    type: Number,
+    required: false, // calculated from keywords
+  },
   createdAt: {
     type: Date,
     default: Date.now,
