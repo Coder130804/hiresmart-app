@@ -105,7 +105,7 @@ const ScoreFeedback = () => {
 
               <div className="score-buttons">
                 {allowLogout && (
-                  <Link to="/logoutafterscore">
+                  <Link to="/logout-allowed">
                     <button className="logout-button">Logout</button>
                   </Link>
                 )}
