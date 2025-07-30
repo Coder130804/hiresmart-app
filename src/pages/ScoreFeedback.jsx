@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './ScoreFeedback.css';
+import './scorefeedback.css';
 import { Pie } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import Navbar from '../components/Navbar'; // Adjust path as per your structure
