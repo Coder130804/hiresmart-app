@@ -56,7 +56,7 @@ const MyProfile = () => {
       const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
       method: 'POST',
       headers: {
-      Authorization: `Bearer ${localStorage.get('token')}`
+      Authorization: `Bearer ${localStorage.getItem('token')}`
      },
      body: formData
      });
