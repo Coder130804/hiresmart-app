@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './scorefeedback.css';
-import { Pie } from 'react-chartjs-2';
-import Chart from 'chart.js/auto';
-import Navbar from '../components/Navbar'; // Adjust path as per your structure
+import Navbar from '../components/Navbar';
+import { Link } from 'react-router-dom';
 
 const ScoreFeedback = () => {
   const [feedback, setFeedback] = useState(null);
@@ -46,12 +45,12 @@ const ScoreFeedback = () => {
 
     if (!storedQs.length) {
       setInterviewAttempted(false);
-      return; // Don't generate feedback if no questions were attempted
+      return;
     }
 
     let totalScore = 0;
     const results = storedQs.map((q) => {
-      const score = Math.random() > 0.3 ? 1 : 0; // 70% pass rate
+      const score = Math.floor(Math.random() * 6) + 5; // Score between 5 and 10
       totalScore += score;
 
       return {
@@ -75,69 +74,52 @@ const ScoreFeedback = () => {
   const totalQuestions = feedback?.results?.length || 0;
   const score = feedback?.totalScore || 0;
 
-  const chartData = {
-    labels: ['Score', 'Remaining'],
-    datasets: [
-      {
-        label: 'Interview Score',
-        data: [score, totalQuestions - score],
-        backgroundColor: ['#36A2EB', '#FF6384'],
-      },
-    ],
-  };
-
   return (
     <>
       <Navbar />
-      <div className="score-feedback-container">
-        <h2>Score & Feedback</h2>
+      <div className="score-feedback-page">
+        <div className="score-container">
+          <h2 className="score-heading">Score & Feedback</h2>
 
-        {loading ? (
-          <div>Loading feedback...</div>
-        ) : feedback ? (
-          <>
-            <div className="score-section">
-              <h3>Total Score: {score} / {totalQuestions}</h3>
-              <div className="chart-container">
-                <Pie data={chartData} />
+          {loading ? (
+            <div>Loading feedback...</div>
+          ) : feedback ? (
+            <>
+              <div className="score-section">
+                <h3>Total Score: {score} / {totalQuestions * 10}</h3>
               </div>
-            </div>
 
-            <div className="question-feedback">
-              {feedback.results.map((item, idx) => (
-                <div key={idx} style={{ marginBottom: '25px' }}>
-                  <p><strong>Q{idx + 1}: {item.question}</strong></p>
-                  <p>✅ Score: <strong>{item.score}</strong> / 1</p>
-                </div>
-              ))}
-            </div>
+              <div className="question-feedback">
+                {feedback.results.map((item, idx) => (
+                  <div key={idx} style={{ marginBottom: '25px' }}>
+                    <p><strong>Q{idx + 1}: {item.question}</strong></p>
+                    <p>✅ Score: <strong>{item.score}</strong> / 10</p>
+                  </div>
+                ))}
+              </div>
 
-            <div className="feedback-summary">
-              <h3>Summary</h3>
-              <p>{feedback.summary}</p>
-            </div>
-          </>
-        ) : (
-          <div>
-            <h3>No interview found!</h3>
-            <p>Please complete the interview before accessing feedback.</p>
-            <a href="/give-interview" className="interview-button-link">
-    <button className="go-interview-button">Go to Interview Page</button>
-  </a>
-          </div>
-        )}
+              <div className="feedback-summary">
+                <h3>Summary</h3>
+                <p>{feedback.summary}</p>
+              </div>
 
-        <div style={{ marginTop: '20px' }}>
-          <button
-            onClick={() => {
-              localStorage.removeItem('token');
-              window.location.href = '/';
-            }}
-            className="logout-button"
-            disabled={!allowLogout}
-          >
-            Logout
-          </button>
+              <div className="score-buttons">
+                {allowLogout && (
+                  <Link to="/logoutafterscore">
+                    <button className="logout-button">Logout</button>
+                  </Link>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="no-interview">
+              <h3>No interview found!</h3>
+              <p>Please complete the interview before accessing feedback.</p>
+              <a href="/give-interview" className="interview-button-link">
+                <button className="go-interview-button">Go to Interview Page</button>
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </>

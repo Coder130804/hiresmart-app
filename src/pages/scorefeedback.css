@@ -1,44 +1,64 @@
 .score-feedback-page {
-   background-image: url('https://i0.wp.com/connectusrecruitment.co.uk/wp-content/uploads/2024/08/interview-feedback-cover-1.jpg?fit=1000%2C553&ssl=1');
-    background-size: cover;
+  background-image: url('https://i0.wp.com/connectusrecruitment.co.uk/wp-content/uploads/2024/08/interview-feedback-cover-1.jpg?fit=1000%2C553&ssl=1');
+  background-size: cover;
   min-height: 100vh;
-  color: black;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
 
-.feedback-box {
-  background: rgba(255, 255, 255, 0.95);
-  margin: 50px auto;
-  padding: 30px;
-  max-width: 700px;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+.score-container {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.chart-container {
-  width: 250px;
-  height: 250px;
-  margin: 0 auto;
-}
-
-.summary {
-  font-size: 1.2rem;
-  margin-top: 20px;
+.score-heading {
   text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
 }
 
 .question-feedback {
   margin-top: 30px;
 }
 
-footer {
-  text-align: center;
+.feedback-summary {
   margin-top: 40px;
-  font-size: 0.9rem;
-  color: #333;
+  font-size: 1.2rem;
+  text-align: center;
 }
+
+.score-buttons {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.logout-button {
+  padding: 10px 30px;
+  font-size: 16px;
+  background-color: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #005fa3;
+}
+
 .no-interview {
   text-align: center;
-  margin-top: 30px;
+  font-size: 1.2rem;
 }
 
 .go-interview-button {
@@ -55,5 +75,3 @@ footer {
 .go-interview-button:hover {
   background-color: #005fa3;
 }
-
-
