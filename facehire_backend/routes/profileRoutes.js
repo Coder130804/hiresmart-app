@@ -36,10 +36,15 @@ router.get('/email/:email', async (req, res) => {
 });
 
 // 📤 Save or update profile
-router.post('/', upload.single('cv'), async (req, res) => {
+router.post('/', auth, upload.single('cv'), async (req, res) => {
   try {
+    const userId = req.user.id || req.user._id; // ← get userId from decoded JWT
     const profileData = req.body;
-    if (req.file) profileData.cv = req.file.filename;
+    profileData.userId = userId; // ← assign it to the profile data
+
+    if (req.file) {
+      profileData.cv = req.file.filename;
+    }
 
     let profile = await Profile.findOne({ email: profileData.email });
     if (profile) {
