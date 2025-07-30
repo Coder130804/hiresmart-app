@@ -27,6 +27,7 @@
     "jwt-decode": "^4.0.0",
     "mongoose": "^8.16.0",
     "multer": "^2.0.2",
-    "openai": "^5.10.2"
+    "openai": "^5.10.2",
+    "tmp-promise": "^3.0.3"
   }
 }
