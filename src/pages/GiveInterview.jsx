@@ -150,6 +150,8 @@ const GiveInterview = () => {
       .map(q => typeof q === 'string' ? q : q.question);
 
     const fullQs = [...initialHR, ...domainQuestions, ...finalHR];
+     localStorage.setItem('theme', jobTheme);
+  localStorage.setItem('interviewQuestions', JSON.stringify(fullQs));
     setQuestions(fullQs);
     setInterviewStarted(true);
 
