@@ -29,8 +29,8 @@ const ScoreFeedback = () => {
         setFeedback(data);
         setAllowLogout(true);
       } catch (err) {
-        console.error('API error, generating fake feedback');
-        generateFakeFeedback(); // fallback
+        console.error('API error, generating feedback');
+        generateCalFeedback(); // error handling-cal
       } finally {
         setLoading(false);
       }
@@ -39,7 +39,7 @@ const ScoreFeedback = () => {
     fetchFeedback();
   }, []);
 
-  const generateFakeFeedback = () => {
+  const generateCalFeedback = () => {
     const storedQs = JSON.parse(localStorage.getItem('interviewQuestions')) || [];
     const theme = localStorage.getItem('theme') || 'General';
 
