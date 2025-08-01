@@ -112,23 +112,20 @@ const MyProfile = () => {
         <div className="form-container">
           <h2>{isEdit ? '✏️ Edit Profile' : '👤 My Profile'}</h2>
           <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <span style={{ color: 'red' }}>*</span>
-  <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required minLength={4} />
-  <span style={{ color: 'red' }}>*</span>
+  <input name="name" placeholder="Name*" value={form.name} onChange={handleChange} required minLength={4} />
   <input
     name="email"
     type="email"
-    placeholder="Email"
+    placeholder="Email ID*"
     value={form.email}
     onChange={handleChange}
     required
     pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
     title="Invalid email format"
   />
-  <span style={{ color: 'red' }}>*</span>
   <input
     name="phone"
-    placeholder="Phone"
+    placeholder="Phone*"
     value={form.phone}
     onChange={handleChange}
     required
@@ -162,8 +159,7 @@ const MyProfile = () => {
     ))}
   </select>
 
-  <span style={{ color: 'red' }}>*</span>
-  <input name="previousCompany" placeholder="Previous Company" value={form.previousCompany} onChange={handleChange} required minLength={4} />
+  <input name="previousCompany" placeholder="Previous Company*" value={form.previousCompany} onChange={handleChange} required minLength={4} />
   <label>Required(in Rs.)<span style={{ color: 'red' }}>*</span></label>
   <input
     name="previousSalary"
@@ -187,13 +183,13 @@ const MyProfile = () => {
   />
 
   <input name="areaOfInterest" placeholder="Area of Interest" value={form.areaOfInterest} onChange={handleChange} />
-  <span style={{ color: 'red' }}>*</span>
-  <input name="qualifications" placeholder="Qualifications" value={form.qualifications} onChange={handleChange} required minLength={4} />
-  <span style={{ color: 'red' }}>*</span>
-  <input name="skills" placeholder="Skills" value={form.skills} onChange={handleChange} required minLength={4} />
+
+  <input name="qualifications" placeholder="Qualifications*" value={form.qualifications} onChange={handleChange} required minLength={4} />
+  
+  <input name="skills" placeholder="Skills*" value={form.skills} onChange={handleChange} required minLength={4} />
 
   <fieldset>
-    <legend><strong>[optional]</strong>Languages Known (select multiple)</legend>
+    <legend><strong>[optional]</strong> Languages Known (select multiple) </legend>
     {["English","Hindi","Bengali","Odia","Marathi","Malayalam","Telgu","Tamil","Kannada","Gujarati","Urdu"].map(lang => (
       <label key={lang} style={{ marginRight: '10px' }}>
         <input
@@ -235,10 +231,9 @@ const MyProfile = () => {
     {jobTypes.map(j => <option key={j} value={j}>{j}</option>)}
   </select>
 
-  <span style={{ color: 'red' }}>*</span>
-  <textarea name="address" placeholder="Address" value={form.address} onChange={handleChange} required minLength={4} />
+  <textarea name="address" placeholder="Address*" value={form.address} onChange={handleChange} required minLength={4} />
 
-  <label>Upload CV (PDF only) <span style={{ color: 'red' }}>*</span></label>
+  <label>Upload CV (PDF only max. upto 10MB) <span style={{ color: 'red' }}>*</span></label>
   <input type="file" name="cv" accept="application/pdf" onChange={(e) => setCV(e.target.files[0])} required={!isEdit} />
 
   <button type="submit">{isEdit ? 'Update Profile' : 'Save Profile'}</button>
