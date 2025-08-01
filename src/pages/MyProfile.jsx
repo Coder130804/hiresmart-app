@@ -112,9 +112,9 @@ const MyProfile = () => {
         <div className="form-container">
           <h2>{isEdit ? '✏️ Edit Profile' : '👤 My Profile'}</h2>
           <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <label>Required<span style={{ color: 'red' }}>*</span></label>
+          <label><span style={{ color: 'red' }}>*</span></label>
   <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required minLength={4} />
-  <label>Required<span style={{ color: 'red' }}>*</span></label>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <input
     name="email"
     type="email"
@@ -125,7 +125,7 @@ const MyProfile = () => {
     pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
     title="Invalid email format"
   />
-  <label>Required<span style={{ color: 'red' }}>*</span></label>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <input
     name="phone"
     placeholder="Phone"
@@ -135,7 +135,7 @@ const MyProfile = () => {
     pattern="[0-9]{10}"
     title="Enter a valid 10-digit number"
   />
-  <label>Required<span style={{ color: 'red' }}>*</span></label>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <fieldset>
     <legend>Gender</legend>
     {["Male", "Female", "Prefer not to say"].map(g => (
@@ -150,11 +150,11 @@ const MyProfile = () => {
         /> {g}
       </label>
     ))}
-    <label>Required<span style={{ color: 'red' }}>*</span></label>
   </fieldset>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <input name="dob" type="date" value={form.dob} onChange={handleChange} required />
 
-  <label>Required<span style={{ color: 'red' }}>*</span></label>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <select name="experience" value={form.experience} onChange={handleChange} required>
     <option value="">Years of Experience</option>
     {Array.from({ length: 21 }, (_, i) => (
@@ -162,7 +162,7 @@ const MyProfile = () => {
     ))}
   </select>
 
-  <label>Required<span style={{ color: 'red' }}>*</span></label>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <input name="previousCompany" placeholder="Previous Company" value={form.previousCompany} onChange={handleChange} required minLength={4} />
   <label>Required(in Rs.)<span style={{ color: 'red' }}>*</span></label>
   <input
@@ -187,13 +187,13 @@ const MyProfile = () => {
   />
 
   <input name="areaOfInterest" placeholder="Area of Interest" value={form.areaOfInterest} onChange={handleChange} />
-  <label>Required<span style={{ color: 'red' }}>*</span></label>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <input name="qualifications" placeholder="Qualifications" value={form.qualifications} onChange={handleChange} required minLength={4} />
-  <label>Required<span style={{ color: 'red' }}>*</span></label>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <input name="skills" placeholder="Skills" value={form.skills} onChange={handleChange} required minLength={4} />
 
   <fieldset>
-    <legend>Languages Known (Select multiple)</legend>
+    <legend>Languages Known (select multiple)</legend>
     {["English","Hindi","Bengali","Odia","Marathi","Malayalam","Telgu","Tamil","Kannada","Gujarati","Urdu"].map(lang => (
       <label key={lang} style={{ marginRight: '10px' }}>
         <input
@@ -211,31 +211,31 @@ const MyProfile = () => {
     ))}
   </fieldset>
   
-  <label>Required<span style={{ color: 'red' }}>*</span></label>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <select name="city" value={form.city} onChange={handleChange} required>
     <option value="">Select City</option>
     {indianCities.map(city => <option key={city} value={city}>{city}</option>)}
   </select>
 
-  <label>Required <span style={{ color: 'red' }}>*</span></label>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <select name="state" value={form.state} onChange={handleChange} required>
     <option value="">Select State</option>
     {indianStates.map(state => <option key={state} value={state}>{state}</option>)}
   </select>
 
-   <label>Required <span style={{ color: 'red' }}>*</span></label>
+   <label><span style={{ color: 'red' }}>*</span></label>
   <select name="country" value={form.country} onChange={handleChange} required>
     <option value="">Select Country</option>
     {countries.map(c => <option key={c} value={c}>{c}</option>)}
   </select>
 
-  <label>Required <span style={{ color: 'red' }}>*</span></label>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <select name="jobType" value={form.jobType} onChange={handleChange} required>
     <option value="">Select Job Type</option>
     {jobTypes.map(j => <option key={j} value={j}>{j}</option>)}
   </select>
 
-  <label>Required <span style={{ color: 'red' }}>*</span></label>
+  <label><span style={{ color: 'red' }}>*</span></label>
   <textarea name="address" placeholder="Address" value={form.address} onChange={handleChange} required minLength={4} />
 
   <label>Upload CV (PDF only) <span style={{ color: 'red' }}>*</span></label>
