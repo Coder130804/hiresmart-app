@@ -112,51 +112,122 @@ const MyProfile = () => {
         <div className="form-container">
           <h2>{isEdit ? '✏️ Edit Profile' : '👤 My Profile'}</h2>
           <form onSubmit={handleSubmit} encType="multipart/form-data">
-            <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required />
-            <input name="email" type="email" placeholder="Email" value={form.email} onChange={handleChange} required />
-            <input name="phone" placeholder="Phone" value={form.phone} onChange={handleChange} required />
-            <input name="dob" type="date" value={form.dob} onChange={handleChange} required />
+  <input name="name" placeholder="Name" value={form.name} onChange={handleChange} required minLength={4} />
+  <input
+    name="email"
+    type="email"
+    placeholder="Email"
+    value={form.email}
+    onChange={handleChange}
+    required
+    pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
+    title="Invalid email format"
+  />
+  <input
+    name="phone"
+    placeholder="Phone"
+    value={form.phone}
+    onChange={handleChange}
+    required
+    pattern="[0-9]{10}"
+    title="Enter a valid 10-digit number"
+  />
+  <input name="dob" type="date" value={form.dob} onChange={handleChange} required />
 
-            <select name="experience" value={form.experience} onChange={handleChange} required>
-              <option value="">Years of Experience</option>
-              {Array.from({ length: 21 }, (_, i) => (
-                <option key={i} value={`${i} years`}>{i} years</option>
-              ))}
-            </select>
+  <select name="experience" value={form.experience} onChange={handleChange} required>
+    <option value="">Years of Experience</option>
+    {Array.from({ length: 21 }, (_, i) => (
+      <option key={i} value={`${i} years`}>{i} years</option>
+    ))}
+  </select>
 
-            <input name="previousCompany" placeholder="Previous Company" value={form.previousCompany} onChange={handleChange} />
-            <input name="previousSalary" placeholder="Previous Salary" value={form.previousSalary} onChange={handleChange} />
-            <input name="salaryExpectations" placeholder="Expected Salary" value={form.salaryExpectations} onChange={handleChange} />
-            <input name="areaOfInterest" placeholder="Area of Interest" value={form.areaOfInterest} onChange={handleChange} />
-            <input name="qualifications" placeholder="Qualifications" value={form.qualifications} onChange={handleChange} />
-            <input name="skills" placeholder="Skills" value={form.skills} onChange={handleChange} />
-            <input name="languages" placeholder="Languages (comma-separated)" value={form.languages} onChange={handleChange} />
+  <input name="previousCompany" placeholder="Previous Company" value={form.previousCompany} onChange={handleChange} required minLength={4} />
+  <input
+    name="previousSalary"
+    placeholder="Previous Salary"
+    type="number"
+    value={form.previousSalary}
+    onChange={handleChange}
+    required
+    min={5000}
+  />
+  <input
+    name="salaryExpectations"
+    placeholder="Expected Salary"
+    type="number"
+    value={form.salaryExpectations}
+    onChange={handleChange}
+    required
+    min={Math.max(Number(form.previousSalary) || 0, 5000)}
+    title="Expected salary cannot be less than previous salary"
+  />
 
-            <select name="city" value={form.city} onChange={handleChange} required>
-              <option value="">Select City</option>
-              {indianCities.map(city => <option key={city} value={city}>{city}</option>)}
-            </select>
+  <input name="areaOfInterest" placeholder="Area of Interest" value={form.areaOfInterest} onChange={handleChange} />
+  <input name="qualifications" placeholder="Qualifications" value={form.qualifications} onChange={handleChange} required minLength={4} />
+  <input name="skills" placeholder="Skills" value={form.skills} onChange={handleChange} required minLength={4} />
 
-            <select name="state" value={form.state} onChange={handleChange} required>
-              <option value="">Select State</option>
-              {indianStates.map(state => <option key={state} value={state}>{state}</option>)}
-            </select>
+  <fieldset>
+    <legend>Languages Known (Select multiple)</legend>
+    {["English","Hindi","Bengali","Odia","Marathi","Malayalam","Telgu","Tamil","Kannada","Gujarati","Urdu"].map(lang => (
+      <label key={lang} style={{ marginRight: '10px' }}>
+        <input
+          type="checkbox"
+          value={lang}
+          checked={form.languages.includes(lang)}
+          onChange={(e) => {
+            const selected = [...form.languages.split(',').map(l => l.trim())];
+            if (e.target.checked) selected.push(lang);
+            else selected.splice(selected.indexOf(lang), 1);
+            setForm({ ...form, languages: [...new Set(selected)].join(',') });
+          }}
+        /> {lang}
+      </label>
+    ))}
+  </fieldset>
 
-            <select name="country" value={form.country} onChange={handleChange} required>
-              <option value="">Select Country</option>
-              {countries.map(c => <option key={c} value={c}>{c}</option>)}
-            </select>
+  <fieldset>
+    <legend>Gender</legend>
+    {["Male", "Female", "Prefer not to say"].map(g => (
+      <label key={g} style={{ marginRight: '10px' }}>
+        <input
+          type="radio"
+          name="gender"
+          value={g}
+          checked={form.gender === g}
+          onChange={handleChange}
+          required
+        /> {g}
+      </label>
+    ))}
+  </fieldset>
 
-            <select name="jobType" value={form.jobType} onChange={handleChange} required>
-              <option value="">Select Job Type</option>
-              {jobTypes.map(j => <option key={j} value={j}>{j}</option>)}
-            </select>
+  <select name="city" value={form.city} onChange={handleChange} required>
+    <option value="">Select City</option>
+    {indianCities.map(city => <option key={city} value={city}>{city}</option>)}
+  </select>
 
-            <textarea name="address" placeholder="Address" value={form.address} onChange={handleChange} required />
-            <input type="file" name="cv" accept="application/pdf" onChange={(e) => setCV(e.target.files[0])} />
+  <select name="state" value={form.state} onChange={handleChange} required>
+    <option value="">Select State</option>
+    {indianStates.map(state => <option key={state} value={state}>{state}</option>)}
+  </select>
 
-            <button type="submit">{isEdit ? 'Update Profile' : 'Save Profile'}</button>
-          </form>
+  <select name="country" value={form.country} onChange={handleChange} required>
+    <option value="">Select Country</option>
+    {countries.map(c => <option key={c} value={c}>{c}</option>)}
+  </select>
+
+  <select name="jobType" value={form.jobType} onChange={handleChange} required>
+    <option value="">Select Job Type</option>
+    {jobTypes.map(j => <option key={j} value={j}>{j}</option>)}
+  </select>
+
+  <textarea name="address" placeholder="Address" value={form.address} onChange={handleChange} required minLength={4} />
+
+  <label>Upload CV (PDF only) <span style={{ color: 'red' }}>*</span></label>
+  <input type="file" name="cv" accept="application/pdf" onChange={(e) => setCV(e.target.files[0])} required={!isEdit} />
+
+  <button type="submit">{isEdit ? 'Update Profile' : 'Save Profile'}</button>
+</form>
         </div>
       </div>
     </div>

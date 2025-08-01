@@ -15,6 +15,7 @@ const profileSchema = new mongoose.Schema({
   qualifications: String,
   skills: String,
   languages: String,
+  gender: String,
   city: String,
   state: String,
   country: String,
@@ -24,3 +25,4 @@ const profileSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 module.exports = mongoose.model('Profile', profileSchema);
+

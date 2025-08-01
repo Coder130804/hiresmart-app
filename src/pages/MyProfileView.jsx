@@ -61,14 +61,14 @@ const MyProfileView = () => {
       </nav>
 
       <div className="profile-view-container">
-        <h2>👤 Your Profile</h2>
+        <h2>👤 My Profile</h2>
         <div className="profile-section-container">
 
           <div className="section-box">
-            <p><strong>Name:</strong> {profile.name}</p>
-            <p><strong>Email:</strong> {profile.email}</p>
-            <p><strong>Phone:</strong> {profile.phone}</p>
-            <p><strong>DOB:</strong> {profile.dob}</p>
+           <p><strong>Name:</strong> {profile.name}</p>
+           <p><strong>Email ID:</strong> {profile.email}</p>
+           <p><strong>Phone:</strong> {profile.phone}</p>
+           <p><strong>Gender:</strong> {profile.gender}</p>
           </div>
 
           <div className="section-box">
