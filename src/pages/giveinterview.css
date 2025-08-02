@@ -95,50 +95,6 @@ body, html {
   padding: 20px;
 }
 
-.interview-container {
-  display: flex;
-  gap: 20px;
-  flex-wrap: nowrap;
-  margin-top: 20px;
-}
-
-/* Live section */
-.live-section {
-  flex: 1;
-  background: rgba(255,255,255,0.9);
-  color: #222;
-  padding: 12px;
-  border-radius: 8px;
-  max-width: 40%;
-  min-width: 320px;
-  font-size: 0.95rem;
-}
-
-/* Preview section */
-.preview-section {
-  flex: 1;
-  background: rgba(255,255,255,0.9);
-  color: #222;
-  padding: 12px;
-  border-radius: 8px;
-  max-width: 40%;
-  min-width: 320px;
-  font-size: 0.95rem;
-  text-align: center;
-}
-
-/* Video styling */
-.live-video,
-.preview-video {
-  width: 100%;
-  height: 240px;  /* reduced from full */
-  background: black;
-  border-radius: 6px;
-}
-/* Buttons */
-.button-row {
-  margin-top: 12px;
-}
 
 .button-row button {
   margin-right: 8px;
@@ -219,14 +175,68 @@ body, html {
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.8);
 }
 
+/* 🎥 Black banner */
 .black-banner {
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  padding: 14px 20px;
   text-align: center;
-  font-size: 1.2rem;
+  padding: 12px 20px;
+  margin: 20px auto;
   font-weight: bold;
   border-radius: 8px;
-  max-width: 400px;
-  margin: 0 auto 20px;
+  width: fit-content;
+}
+
+/* 🧍🏽‍♂️ Center layout */
+.interview-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+/* 🎥 Video Sections */
+.live-section,
+.preview-section {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 420px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* 🎬 Videos */
+.live-video,
+.preview-video {
+  width: 100%;
+  height: 260px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  object-fit: cover;
+  background: black;
+}
+
+/* 🎛 Buttons row */
+.button-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* ⏳ Loading overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,0.8);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
 }

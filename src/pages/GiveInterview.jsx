@@ -164,6 +164,7 @@ const GiveInterview = () => {
   };
 
   const handleStartInterview = async () => {
+    setLoading(true);
     const domainQuestions = [...themeMap[jobTheme]]
       .sort(() => 0.5 - Math.random())
       .slice(0, 5)
@@ -203,6 +204,7 @@ const GiveInterview = () => {
 
     setTimeout(() => {
       startRecording(); // Auto start on first question
+      setLoading(false); // Stop spinner
     }, 500);
   };
 
@@ -211,6 +213,10 @@ const GiveInterview = () => {
       startRecording(); // Auto start on every question after 0
     }
   }, [currentQ]);
+
+if (loading) {
+  return <div className="loading-overlay">Loading Interview Setup...</div>;
+}
 
   return (
     <>
@@ -246,11 +252,6 @@ const GiveInterview = () => {
               <p>{questions[currentQ]}</p>
               <video ref={videoRef} className="live-video" muted></video>
               <div className="button-row">
-                <button
-                  onClick={startRecording}
-                  disabled={recording || recordedQs[currentQ]}>
-                  Start Recording
-                </button>
                 <button onClick={stopRecording} disabled={!recording}>Stop Recording</button>
                 <button onClick={nextQuestion} disabled={recording || !videoBlob}>Next Question</button>
               </div>
