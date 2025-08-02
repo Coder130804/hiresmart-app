@@ -1,4 +1,4 @@
-// ✅ MODIFIED GiveInterview.jsx with Transcript Extraction (No UI Changes)
+// ✅ MODIFIED GiveInterview.jsx
 import React, { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -41,13 +41,13 @@ const themeMap = {
   "Grassroot Governance and Decentralised Planning": grassQuestions,
   "Infrastructure": infraQuestions,
   "People": peopleQuestions,
-  "Planning & Ananlytics": pnaQuestions,
+  "Planning & Analytics": pnaQuestions,
   "Public Health": pbQuestions,
   "Skill Development": lsdQuestions,
   "Sports": sports,
   "Supply Chain": supplyQuestions,
   "Tribal Identity": tribalQuestions,
-  "Urban dev": urbanDevelopmentQuestions,
+  "Urban Development": urbanDevelopmentQuestions,
   "Urban Habitat": uhab,
   "Workplace Ecosystem": wecoQuestions
 };
@@ -72,6 +72,7 @@ const GiveInterview = () => {
   const [recording, setRecording] = useState(false);
   const [videoBlob, setVideoBlob] = useState(null);
   const [transcript, setTranscript] = useState('');
+  const [recordedQs, setRecordedQs] = useState({});
 
   const [interviewDone, setInterviewDone] = useState(false);
   const [interviewStarted, setInterviewStarted] = useState(false);
@@ -114,18 +115,19 @@ const GiveInterview = () => {
             question: questions[currentQ],
             videoType: 'video/webm',
             videoBase64: base64data,
-            transcript // NEW: send transcript
+            transcript
           })
         });
       };
       reader.readAsDataURL(blob);
+
+      setRecordedQs(prev => ({ ...prev, [currentQ]: true }));
     };
 
     mediaRecorderRef.current = recorder;
     recorder.start();
     setRecording(true);
 
-    // Start browser-based speech recognition
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
     recognition.continuous = true;
@@ -168,10 +170,11 @@ const GiveInterview = () => {
       .map(q => typeof q === 'string' ? q : q.question);
 
     const fullQs = [...initialHR, ...domainQuestions, ...finalHR];
-     localStorage.setItem('theme', jobTheme);
-  localStorage.setItem('interviewQuestions', JSON.stringify(fullQs));
+    localStorage.setItem('theme', jobTheme);
+    localStorage.setItem('interviewQuestions', JSON.stringify(fullQs));
     setQuestions(fullQs);
     setInterviewStarted(true);
+    setCurrentQ(0);
 
     try {
       const response = await fetch('https://hiresmart-backend1.onrender.com/api/interview/session', {
@@ -197,12 +200,21 @@ const GiveInterview = () => {
     } catch (err) {
       console.error('❌ Error saving session:', err.message);
     }
+
+    setTimeout(() => {
+      startRecording(); // Auto start on first question
+    }, 500);
   };
+
+  useEffect(() => {
+    if (interviewStarted && currentQ !== 0) {
+      startRecording(); // Auto start on every question after 0
+    }
+  }, [currentQ]);
 
   return (
     <>
       <Navbar />
-      {/* Existing UI untouched */}
       {interviewDone ? (
         <div className="interview-complete">
           <h2>You have already given the interview. Please wait for feedback.</h2>
@@ -224,9 +236,9 @@ const GiveInterview = () => {
         </div>
       ) : (
         <div className="interview-page">
-          <h3 style={{ textAlign: 'center', marginTop: '20px', fontSize: '1.4rem', color: '#1e3a8a' }}>
+          <div className="black-banner">
             🎥 Video Interview In Progress
-          </h3>
+          </div>
 
           <div className="interview-container">
             <aside className="live-section">
@@ -234,8 +246,12 @@ const GiveInterview = () => {
               <p>{questions[currentQ]}</p>
               <video ref={videoRef} className="live-video" muted></video>
               <div className="button-row">
-                {!recording && <button onClick={startRecording}>Start Recording</button>}
-                {recording && <button onClick={stopRecording}>Stop Recording</button>}
+                <button
+                  onClick={startRecording}
+                  disabled={recording || recordedQs[currentQ]}>
+                  Start Recording
+                </button>
+                <button onClick={stopRecording} disabled={!recording}>Stop Recording</button>
                 <button onClick={nextQuestion} disabled={recording || !videoBlob}>Next Question</button>
               </div>
             </aside>
