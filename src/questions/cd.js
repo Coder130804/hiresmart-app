@@ -240,3 +240,4 @@ const cdQuestions = [
     scoreMode: "keyword"
   }
 ];
+export default cdQuestions;

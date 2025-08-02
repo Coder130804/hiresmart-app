@@ -240,3 +240,4 @@ const grassQuestions = [
     scoreMode: "keyword"
   }
 ];
+export default grassQuestions;

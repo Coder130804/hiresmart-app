@@ -1,4 +1,4 @@
-export const infraQuestions = [
+const infraQuestions = [
   {
     id: 1,
     question: "What do you understand by rural infrastructure in development work?",
@@ -240,3 +240,4 @@ export const infraQuestions = [
     scoreMode: "keyword"
   }
 ];
+export default infraQuestions;

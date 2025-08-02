@@ -1,4 +1,4 @@
-const financeQuestions = [
+export const financeQuestions = [
   {
     id: 1,
     question: "What is the role of finance in a non-profit organization like TSF?",

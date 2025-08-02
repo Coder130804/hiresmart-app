@@ -1,4 +1,4 @@
-const agriQuestions = [
+export const agriQuestions = [
   {
     id: 1,
     question: "What is your understanding of sustainable agriculture?",
@@ -241,5 +241,4 @@ const agriQuestions = [
   }
 ];
 
-export default agriQuestions;
  

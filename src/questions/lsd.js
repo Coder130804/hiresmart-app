@@ -1,4 +1,4 @@
-export const lsdQuestions = [
+const lsdQuestions = [
   {
     id: 1,
     question: "	What is skill development in the rural Indian context??",
@@ -240,3 +240,4 @@ export const lsdQuestions = [
     scoreMode: "keyword"
   }
 ];
+export default lsdQuestions;

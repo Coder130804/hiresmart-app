@@ -1,4 +1,4 @@
-const wecoQuestions = [
+export const wecoQuestions = [
   {
     id: 1,
     question: "What does a positive workplace ecosystem mean to you?",

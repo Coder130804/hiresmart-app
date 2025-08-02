@@ -1,4 +1,4 @@
-const cdQuestions = [
+export const cdQuestions = [
   {
     id: 1,
     question: "What does community development mean to you?",

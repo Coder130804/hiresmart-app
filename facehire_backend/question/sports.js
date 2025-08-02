@@ -1,4 +1,4 @@
-const sports = [
+export const sports = [
   {
     id: 1,
     question: "How do you see the role of sports in community development?",

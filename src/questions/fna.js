@@ -240,4 +240,4 @@ const financeQuestions = [
     scoreMode: "keyword"
   }
 ];
-
+export default financeQuestions;

@@ -240,3 +240,4 @@ const pnaQuestions = [
     scoreMode: "keyword"
   }
 ];
+export default pnaQuestions;

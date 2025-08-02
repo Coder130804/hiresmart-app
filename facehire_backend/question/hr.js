@@ -1,5 +1,3 @@
-// 📁 src/data/questions/hr.js
-
 export const hrQuestions = [
   {
     id: 1,

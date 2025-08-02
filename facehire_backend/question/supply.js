@@ -1,4 +1,4 @@
-const supplyQuestions = [
+export const supplyQuestions = [
   {
     id: 1,
     question: "What is supply chain management (SCM)?",

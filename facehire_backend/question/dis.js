@@ -1,4 +1,4 @@
-const disabilityInclusionQuestions = [
+export const disabilityInclusionQuestions = [
   {
     id: 1,
     question: "What do you understand by disability inclusion?",

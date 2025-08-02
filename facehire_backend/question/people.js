@@ -1,4 +1,4 @@
-const peopleQuestions = [
+export const peopleQuestions = [
   {
     id: 1,
     question: "How do you define 'people-centric development'?",

@@ -240,4 +240,5 @@ const peopleQuestions = [
     scoreMode: "keyword"
   }
 ];
+export default peopleQuestions;
 

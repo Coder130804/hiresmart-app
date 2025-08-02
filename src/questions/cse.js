@@ -240,3 +240,4 @@ const cseQuestions = [
     scoreMode: "keyword",
   },
 ];
+export default cseQuestions;

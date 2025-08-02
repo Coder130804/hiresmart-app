@@ -240,3 +240,4 @@ const wecoQuestions = [
     scoreMode: "keyword"
   }
 ];
+export default wecoQuestions;

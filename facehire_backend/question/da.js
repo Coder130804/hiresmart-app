@@ -1,4 +1,4 @@
-const daQuestions = [
+export const daQuestions = [
   {
     id: 1,
     question: "What is the role of data in community development?",

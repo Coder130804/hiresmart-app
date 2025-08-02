@@ -1,4 +1,4 @@
-const pnaQuestions = [
+export const pnaQuestions = [
   {
     id: 1,
     question: "What does planning mean in a development context?",

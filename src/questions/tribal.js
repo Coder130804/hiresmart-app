@@ -1,4 +1,4 @@
-export const tribalQuestions = [
+const tribalQuestions = [
   {
     id: 1,
     question: "What do you understand by tribal development?",
@@ -240,3 +240,4 @@ export const tribalQuestions = [
     scoreMode: "keyword"
   }
 ];
+export default tribalQuestions;

@@ -1,4 +1,4 @@
-const grassQuestions = [
+export const grassQuestions = [
   {
     id: 1,
     question: "What is decentralised planning?",

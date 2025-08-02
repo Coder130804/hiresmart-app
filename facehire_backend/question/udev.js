@@ -1,4 +1,4 @@
-const urbanDevelopmentQuestions = [
+export const urbanDevelopmentQuestions = [
   {
     id: 1,
     question: "What does urban development mean to you?",

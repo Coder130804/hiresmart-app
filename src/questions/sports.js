@@ -240,3 +240,4 @@ const sports = [
     scoreMode: "keyword",
   },
 ];
+export default sports;

@@ -1,4 +1,4 @@
-export const eduQuestions = [
+const eduQuestions = [
   {
     id: 1,
     question: "What do you understand by foundational literacy and numeracy (FLN?",
@@ -240,3 +240,4 @@ export const eduQuestions = [
     scoreMode: "keyword"
   }
 ];
+export default eduQuestions;

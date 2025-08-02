@@ -240,3 +240,4 @@ const commQuestions = [
     scoreMode: "keyword",
   },
 ];
+export default commQuestions;

@@ -1,5 +1,4 @@
-
-export const genderQuestions = [
+const genderQuestions = [
   {
     id: 1,
     question: "What do you understand by gender equality in the development context?",
@@ -241,3 +240,5 @@ export const genderQuestions = [
     scoreMode: "keyword"
   }
 ];
+
+export default genderQuestions;

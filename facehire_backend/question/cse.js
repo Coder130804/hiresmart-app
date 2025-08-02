@@ -1,4 +1,4 @@
-const cseQuestions = [
+export const cseQuestions = [
   {
     id: 1,
     question: "What is civil society, and how is it important in development?",

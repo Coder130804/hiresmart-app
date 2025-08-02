@@ -1,6 +1,5 @@
-// 📁 src/data/questions/hr.js
 
-export const hrQuestions = [
+const hrQuestions = [
   {
     id: 1,
     question: "Tell me about yourself.",
@@ -27,3 +26,4 @@ export const hrQuestions = [
     scoreMode: "full"
   }
 ];
+export default hrQuestions;

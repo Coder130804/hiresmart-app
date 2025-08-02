@@ -240,3 +240,4 @@ const urbanDevelopmentQuestions = [
     scoreMode: "keyword"
   }
 ];
+export default urbanDevelopmentQuestions;

@@ -240,3 +240,4 @@ const daQuestions = [
     scoreMode: "keyword"
   }
 ];
+export default daQuestions;

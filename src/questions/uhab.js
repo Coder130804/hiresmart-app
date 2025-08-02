@@ -1,4 +1,4 @@
-export const uhab = [
+const uhab = [
   {
     id: 1,
     question: "What is your understanding of the term \"urban habitat\"?",
@@ -240,3 +240,4 @@ export const uhab = [
     scoreMode: "keyword"
   }
 ];
+export default uhab;

@@ -1,4 +1,4 @@
-const commQuestions = [
+export const commQuestions = [
   {
     id: 1,
     question: "What is the role of communication in development work?",
