@@ -14,7 +14,7 @@ export const tribalQuestions = [
   {
     id: 3,
     question: "What is the PESA Act and why is it important?",
-    keywords: ["self-governance", "Gram Sabha", "5th Schedule", "tribal autonomy"],
+    keywords: ["self-governance", "Gram Sabha", "5th Schedule","tribal autonomy"],
     scoreMode: "keyword"
   },
   {

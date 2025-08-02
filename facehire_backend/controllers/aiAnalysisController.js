@@ -6,35 +6,53 @@ const Interview = require('../models/Interview');
 const InterviewSession = require('../models/InterviewSession');
 
 // ✅ Import ALL question files
-const { drcrQuestions } = require('../../shared/questions/drcr.js');
-const { eduQuestions } = require('../../shared/questions/edu.js');
-const { genderQuestions } = require('../../shared/questions/gender.js');
-const { hnQuestions } = require('../../shared/questions/hn.js');
-const { hrQuestions } = require('../../shared/questions/hr.js');
-const { infraQuestions } = require('../../shared/questions/infra.js');
-const { lsdQuestions } = require('../../shared/questions/lsd.js');
-const { merQuestions } = require('../../shared/questions/mer.js');
-const { mlrQuestions } = require('../../shared/questions/mlr.js');
-const { tribalQuestions } = require('../../shared/questions/tribal.js');
-const { volunteerQuestions } = require('../../shared/questions/volunteer.js');
-const { washQuestions } = require('../../shared/questions/wash.js');
-const { youthQuestions } = require('../../shared/questions/youth.js');
+import { agriQuestions } from '../question/agri';
+import { cseQuestions } from '../question/cse';
+import { commQuestions } from '../question/comm';
+import { cdQuestions } from '../question/cd';
+import { daQuestions } from '../question/da';
+import { disabilityInclusionQuestions } from '../question/dis';
+import { eduQuestions } from '../question/edu';
+import { financeQuestions } from '../question/fna';
+import { genderQuestions } from '../question/gender';
+import { grassQuestions } from '../question/grass';
+import { infraQuestions } from '../question/infra';
+import { peopleQuestions } from '../question/people';
+import { pnaQuestions } from '../question/pna';
+import { hrQuestions } from '../question/hr';
+import { pbQuestions } from '../question/pb';
+import { lsdQuestions } from '../question/lsd';
+import { sports } from '../question/sports';
+import { supplyQuestions } from '../question/supply';
+import { tribalQuestions } from '../question/tribal';
+import { urbanDevelopmentQuestions } from '../question/udev';
+import { uhab } from '../question/uhab';
+import { wecoQuestions } from '../question/weco';
 
 // ✅ Combine all questions and flatten
 const allQuestionSets = [
-  ...drcrQuestions,
+  ...agriQuestions,
+  ...cseQuestions,
+  ...commQuestions,
+  ...cdQuestions,
+  ...daQuestions,
+  ...disabilityInclusionQuestions,
   ...eduQuestions,
+  ...financeQuestions,
   ...genderQuestions,
-  ...hnQuestions,
-  ...hrQuestions,
+  ...grassQuestions,
   ...infraQuestions,
+  ...hrQuestions,
+  ...peopleQuestions,
+  ...pnaQuestions,
   ...lsdQuestions,
-  ...merQuestions,
-  ...mlrQuestions,
+  ...pbQuestions,
+  ...sports,
+  ...supplyQuestions,
   ...tribalQuestions,
-  ...volunteerQuestions,
-  ...washQuestions,
-  ...youthQuestions
+  ...urbanDevelopmentQuestions,
+  ...uhab,
+  ...wecoQuestions
 ];
 
 // ✅ Utility function to match keywords

@@ -5,33 +5,51 @@ import Cookies from 'js-cookie';
 import './giveinterview.css';
 import Navbar from '../components/Navbar';
 
-import { drcrQuestions } from '../questions/drcr';
+import { agriQuestions } from '../questions/agri';
+import { cseQuestions } from '../questions/cse';
+import { commQuestions } from '../questions/comm';
+import { cdQuestions } from '../questions/cd';
+import { daQuestions } from '../questions/da';
+import { disabilityInclusionQuestions } from '../questions/dis';
 import { eduQuestions } from '../questions/edu';
+import { financeQuestions } from '../questions/fna';
 import { genderQuestions } from '../questions/gender';
-import { hnQuestions } from '../questions/hn';
-import { hrQuestions } from '../questions/hr';
+import { grassQuestions } from '../questions/grass';
 import { infraQuestions } from '../questions/infra';
+import { peopleQuestions } from '../questions/people';
+import { pnaQuestions } from '../questions/pna';
+import { hrQuestions } from '../questions/hr';
+import { pbQuestions } from '../questions/pb';
 import { lsdQuestions } from '../questions/lsd';
-import { merQuestions } from '../questions/mer';
-import { mlrQuestions } from '../questions/mlr';
+import { sports } from '../questions/sports';
+import { supplyQuestions } from '../questions/supply';
 import { tribalQuestions } from '../questions/tribal';
-import { volunteerQuestions } from '../questions/volunteer';
-import { washQuestions } from '../questions/wash';
-import { youthQuestions } from '../questions/youth';
+import { urbanDevelopmentQuestions } from '../questions/udev';
+import { uhab } from '../questions/uhab';
+import { wecoQuestions } from '../questions/weco';
 
 const themeMap = {
-  "Education & Learning": eduQuestions,
-  "Livelihoods & Skill Development": lsdQuestions,
-  "Health & Nutrition": hnQuestions,
-  "Water, Sanitation & Hygiene (WASH)": washQuestions,
-  "Tribal Development & Inclusion": tribalQuestions,
-  "Disaster Relief & Climate Resilience": drcrQuestions,
-  "Sustainable Infrastructure": infraQuestions,
-  "Volunteerism & Community Engagement": volunteerQuestions,
-  "Gender Equality & Women’s Empowerment": genderQuestions,
-  "Migration & Labour Rights": mlrQuestions,
-  "Youth & Sports Development": youthQuestions,
-  "Monitoring, Evaluation & Research (MER)": merQuestions
+  "Agriculture": agriQuestions,
+  "Civil Society Engagement": cseQuestions,
+  "Communications": commQuestions,
+  "Community development": cdQuestions,
+  "Digital & Analytics": daQuestions,
+  "Disability": disabilityInclusionQuestions,
+  "Education": eduQuestions,
+  "Finance & Accounts": financeQuestions,
+  "Gender & CE": genderQuestions,
+  "Grassroot Governance and Decentralised Planning": grassQuestions,
+  "Infrastructure": infraQuestions,
+  "People": peopleQuestions,
+  "Planning & Ananlytics": pnaQuestions,
+  "Public Health": pbQuestions,
+  "Skill Development": lsdQuestions,
+  "Sports": sports,
+  "Supply Chain": supplyQuestions,
+  "Tribal Identity": tribalQuestions,
+  "Urban dev": urbanDevelopmentQuestions,
+  "Urban Habitat": uhab,
+  "Workplace Ecosystem": wecoQuestions
 };
 
 const initialHR = [

@@ -3,7 +3,7 @@ export const genderQuestions = [
   {
     id: 1,
     question: "What do you understand by gender equality in the development context?",
-    keywords: ["equal rights", "opportunity", "access", "empowerment"],
+    keywords: ["equal rights","opportunity", "access", "empowerment"],
     scoreMode: "keyword"
   },
   {

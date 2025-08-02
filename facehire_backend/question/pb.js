@@ -1,5 +1,5 @@
 
-export const hnQuestions = [
+export const pbQuestions = [
   {
     id: 1,
     question: "What do you understand by community health?",

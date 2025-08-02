@@ -1,7 +1,7 @@
 export const eduQuestions = [
   {
     id: 1,
-    question: "What do you understand by foundational literacy and numeracy (FLN)?",
+    question: "What do you understand by foundational literacy and numeracy (FLN?",
     keywords: ["literacy", "numeracy", "basic skills", "reading", "writing", "arithmetic", "early grades"],
     scoreMode: "keyword"
   },

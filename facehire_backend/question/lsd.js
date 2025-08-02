@@ -1,32 +1,32 @@
 export const lsdQuestions = [
   {
     id: 1,
-    question: "What is meant by \"livelihood development\"?",
-    keywords: ["income generation", "employment", "sustainability", "skill"],
+    question: "	What is skill development in the rural Indian context??",
+    keywords: ["vocational training", "employability", "rural youth"],
     scoreMode: "keyword"
   },
   {
     id: 2,
-    question: "What are the key components of a successful livelihood program?",
-    keywords: ["training", "market linkages", "assets", "capacity building"],
+    question: "	Why is skill development important in today’s economy?",
+    keywords: ["jobs", "productivity", "demographic dividend"],
     scoreMode: "keyword"
   },
   {
     id: 3,
-    question: "How would you assess livelihood opportunities in a rural area?",
-    keywords: ["baseline survey", "mapping", "local resources", "demand analysis"],
+    question: "How does Tata Steel Foundation contribute to skill development?",
+    keywords: ["vocational centers", "RSETI", "industry linkages"],
     scoreMode: "keyword"
   },
   {
     id: 4,
-    question: "What is the role of SHGs in livelihood promotion?",
-    keywords: ["women empowerment", "collective savings", "micro-enterprise"],
+    question: "What are the main challenges in rural skill development?",
+    keywords: ["awareness", "infrastructure", "mobility"],
     scoreMode: "keyword"
   },
   {
     id: 5,
-    question: "What are FPOs and how do they help farmers?",
-    keywords: ["Farmer Producer Organization", "aggregation", "market access"],
+    question: "How would you mobilize youth for a skill training program?",
+    keywords: ["door-to-door", "community meetings", "peer motivation"],
     scoreMode: "keyword"
   },
   {
@@ -49,8 +49,8 @@ export const lsdQuestions = [
   },
   {
     id: 9,
-    question: "What is value chain development in livelihoods?",
-    keywords: ["production", "processing", "packaging", "marketing"],
+    question: "	How do you measure the success of a skilling initiative?",
+    keywords: ["placement rate", "income rise", "feedback"],
     scoreMode: "keyword"
   },
   {
@@ -67,14 +67,14 @@ export const lsdQuestions = [
   },
   {
     id: 12,
-    question: "How would you design a livelihoods intervention for women?",
-    keywords: ["gender", "SHG", "tailoring", "agriculture", "crafts", "empowerment"],
+    question: "	How can digital tools enhance skilling?",
+    keywords: [	"e-learning", "mobile apps", "simulations"],
     scoreMode: "keyword"
   },
   {
     id: 13,
-    question: "How do you ensure sustainability in livelihood projects?",
-    keywords: ["local ownership", "skill transfer", "income regularity"],
+    question: "How can skill training prevent migration from rural areas?",
+    keywords: ["local employment", "self-employment", "entrepreneurship"],
     scoreMode: "keyword"
   },
   {
@@ -85,7 +85,7 @@ export const lsdQuestions = [
   },
   {
     id: 15,
-    question: "How can digital tools support livelihoods?",
+    question: "Can digital tools support development in skills, how?",
     keywords: ["digital literacy", "mobile apps", "e-commerce", "payments"],
     scoreMode: "keyword"
   },
@@ -103,7 +103,7 @@ export const lsdQuestions = [
   },
   {
     id: 18,
-    question: "How do you evaluate the impact of a livelihoods program?",
+    question: "How do you evaluate the impact of a skill development program?",
     keywords: ["income rise", "skill gain", "employment rate", "stories"],
     scoreMode: "keyword"
   },
@@ -145,7 +145,7 @@ export const lsdQuestions = [
   },
   {
     id: 25,
-    question: "What role does agriculture play in rural livelihoods?",
+    question: "What role does digital skills play in rural livelihoods?",
     keywords: ["primary income", "cropping", "allied activities"],
     scoreMode: "keyword"
   },

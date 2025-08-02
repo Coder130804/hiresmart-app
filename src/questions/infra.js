@@ -236,7 +236,7 @@ export const infraQuestions = [
   {
     id: 40,
     question: "Why is rural infrastructure critical for long-term development?",
-    keywords: ["access", "dignity", "services", "opportunity"],
+    keywords: ["access", "dignity", "services", "opportunity"] ,
     scoreMode: "keyword"
   }
 ];
