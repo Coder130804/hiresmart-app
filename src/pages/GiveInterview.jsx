@@ -64,6 +64,7 @@ const finalHR = [
 ];
 
 const GiveInterview = () => {
+  const [loading, setLoading] = useState(false);
   const videoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const chunks = useRef([]);
