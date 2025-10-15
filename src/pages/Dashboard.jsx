@@ -68,10 +68,10 @@ const Dashboard = () => {
       <div className="how-it-works-box">
         <h2>🛠️ How HireSol Works</h2>
         <ol>
-          <li><strong>Sign Up/Login</strong> to create your account.</li>
-          <li><strong>Complete Profile</strong> so we know your background.</li>
+          <li><strong>Sign Up/Login</strong> - to create your account.</li>
+          <li><strong>Complete Profile</strong> - so we know your background.</li>
           <li><strong>Give Interview</strong> – answer 10 questions on camera.</li>
-          <li><strong>Our Automated System</strong> reviews your answers automatically.</li>
+          <li><strong>Our Automated System</strong> - reviews your answers automatically.</li>
           <li><strong>See Score & Feedback</strong> – see how you performed.</li>
           <h4>Move to the 'Give Interview' page, select the job theme you want to apply for and be ready, the interview will begin automatically!</h4>
           <h4>NOTE: Finish answering all the questions once you begin, else your progress won't be saved.</h4>
