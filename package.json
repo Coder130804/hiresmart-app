@@ -1,5 +1,5 @@
 {
-  "name": "hire-smart",
+  "name": "hire-sol",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -56,7 +56,7 @@
   "main": "index.js",
   "keywords": [],
   "author": "Arpita Som",
-  "license": "ISC",
+  "license": "none",
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.6",
