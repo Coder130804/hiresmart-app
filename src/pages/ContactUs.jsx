@@ -12,7 +12,7 @@ const ContactUs = () => {
     alt="Logo"
     style={{ height: '30px', width: '30px', marginRight: '10px', borderRadius: '4px' }}
   />
-  <h2 className="logo">HireSmart</h2>
+  <h2 className="logo">HireSol</h2>
 </div>
 
         <ul>
@@ -40,12 +40,12 @@ const ContactUs = () => {
           <h1>📞 Contact Us</h1>
           <p><strong>Phone:</strong> +91 9876543210</p>
           <p><strong>Telephone:</strong> (0674) 123-4567</p>
-          <p><strong>Email 1:</strong> support@facehire.in</p>
-          <p><strong>Email 2:</strong> careers@facehire.in</p>
+          <p><strong>Email 1:</strong> support@hiresol.in</p>
+          <p><strong>Email 2:</strong> careers@hiresol.in</p>
         </div>
 
         <div className="footer">
-          &copy; {new Date().getFullYear()} HireSmart. All Rights Reserved.
+          &copy; {new Date().getFullYear()} HireSol. All Rights Reserved.
         </div>
       </div>
     </>

@@ -7,7 +7,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="nav-left">
         <img src="https://static.vecteezy.com/system/resources/thumbnails/017/210/724/small/h-s-letter-logo-design-with-swoosh-design-concept-free-vector.jpg" alt="Logo" />
-        <h2 className="logo">HireSmart</h2>
+        <h2 className="logo">HireSol</h2>
       </div>
       <ul>
         <li><Link className="disabled-link" to="/">Home</Link></li>

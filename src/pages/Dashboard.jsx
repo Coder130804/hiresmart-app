@@ -35,7 +35,7 @@ const Dashboard = () => {
             alt="Logo"
             style={{ height: '30px', width: '30px', marginRight: '10px', borderRadius: '4px' }}
           />
-          <h2 className="logo">HireSmart</h2>
+          <h2 className="logo">HireSol</h2>
         </div>
 
         <ul>
@@ -60,13 +60,13 @@ const Dashboard = () => {
 
       {/* ───────────── WELCOME ───────────── */}
       <header className="dashboard-welcome">
-        <h1>Welcome to HireSmart</h1>
+        <h1>Welcome to HireSol</h1>
         <p>Your smart interview assistant!🏅</p>
       </header>
 
       {/* ───────────── HOW IT WORKS ───────────── */}
       <div className="how-it-works-box">
-        <h2>🛠️ How HireSmart Works</h2>
+        <h2>🛠️ How HireSol Works</h2>
         <ol>
           <li><strong>Sign Up / Login</strong> to create your account.</li>
           <li><strong>Complete Profile</strong> so we know your background.</li>

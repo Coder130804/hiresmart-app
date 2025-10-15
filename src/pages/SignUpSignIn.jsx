@@ -67,7 +67,7 @@ const SignUpSignIn = () => {
             marginBottom: '10px'
           }}
         />
-        <h1 className="app-title">HireSmart</h1>
+        <h1 className="app-title">HireSol</h1>
       </div>
 
         <p className="app-description">

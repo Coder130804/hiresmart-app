@@ -38,7 +38,7 @@ const MyProfileView = () => {
             alt="Logo"
             style={{ height: '30px', width: '30px', marginRight: '10px', borderRadius: '4px' }}
           />
-          <h2 className="logo">HireSmart - Viewing My Profile</h2>
+          <h2 className="logo">HireSol - Viewing My Profile</h2>
         </div>
         <ul>
           <li><a href="/">Home</a></li>

@@ -244,7 +244,7 @@ if (loading) {
       ) : (
         <div className="interview-page">
           <div className="black-banner">
-            🎥 Video Interview In Progress
+            🎥 Interview In Progress
           </div>
 
           <div className="interview-container">

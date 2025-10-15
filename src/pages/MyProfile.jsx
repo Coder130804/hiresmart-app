@@ -85,7 +85,7 @@ const MyProfile = () => {
             alt="Logo"
             style={{ height: '30px', width: '30px', marginRight: '10px', borderRadius: '4px' }}
           />
-          <h2 className="logo">HireSmart</h2>
+          <h2 className="logo">HireSol</h2>
         </div>
         <ul>
           <li><a href="/">Home</a></li>

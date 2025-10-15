@@ -35,7 +35,7 @@ app.use('/api/ai', aiRoutes);
 
 // Optional root route for test
 app.get('/', (req, res) => {
-  res.send('✅ HireSmart backend is up and running!');
+  res.send('✅ HireSol backend is up and running!');
 });
 
 // Start server
