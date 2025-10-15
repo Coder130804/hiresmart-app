@@ -106,7 +106,7 @@ const GiveInterview = () => {
       const reader = new FileReader();
       reader.onloadend = async () => {
         const base64data = reader.result.split(',')[1];
-        await fetch('https://hiresmart-backend1.onrender.com/api/interview/upload', {
+        await fetch('https://hiresol-backend1.onrender.com/api/interview/upload', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -179,7 +179,7 @@ const GiveInterview = () => {
     setCurrentQ(0);
 
     try {
-      const response = await fetch('https://hiresmart-backend1.onrender.com/api/interview/session', {
+      const response = await fetch('https://hiresol-backend1.onrender.com/api/interview/session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

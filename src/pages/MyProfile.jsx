@@ -29,7 +29,7 @@ const MyProfile = () => {
 
     const fetchProfile = async () => {
       try {
-        const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile/email/' + email);
+        const res = await fetch('https://hiresol-backend1.onrender.com/api/profile/email/' + email);
         const data = await res.json();
         if (data && data.name) {
           setForm(data);
@@ -53,7 +53,7 @@ const MyProfile = () => {
       Object.entries(form).forEach(([key, value]) => formData.append(key, value));
       if (cv) formData.append('cv', cv);
 
-      const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile', {
+      const res = await fetch('https://hiresol-backend1.onrender.com/api/profile', {
       method: 'POST',
       headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`
