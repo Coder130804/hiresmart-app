@@ -33,7 +33,7 @@ const AuthPage = () => {
   return (
     <div
       className="min-h-screen bg-cover bg-center flex items-center justify-center"
-      style={{ backgroundImage: `url('https://i0.wp.com/connectusrecruitment.co.uk/wp-content/uploads/2024/08/interview-feedback-cover-1.jpg?fit=1000%2C553&ssl=1')` }}
+      style={{ backgroundImage: `url('https://img.freepik.com/free-vector/job-interview-conversation_74855-7566.jpg?semt=ais_hybrid&w=740&q=80')` }}
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-2xl shadow-2xl w-[90%] max-w-md">
         <h1 className="text-3xl font-bold text-center mb-2 text-blue-700">FaceHire</h1>
