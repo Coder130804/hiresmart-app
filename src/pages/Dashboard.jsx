@@ -60,7 +60,7 @@ const Dashboard = () => {
 
       {/* ───────────── WELCOME ───────────── */}
       <header className="dashboard-welcome">
-        <h1>Welcome to HireSol</h1>
+        <h1><strong>Welcome to HireSol</strong></h1>
         <p>Your smart interview assistant!🏅</p>
       </header>
 
