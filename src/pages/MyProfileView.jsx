@@ -17,7 +17,7 @@ const MyProfileView = () => {
 
     const fetchProfile = async () => {
       try {
-        const res = await fetch('https://hiresol-backend1.onrender.com/api/profile/email/' + email);
+        const res = await fetch('https://hiresmart-backend1.onrender.com/api/profile/email/' + email);
         const data = await res.json();
         setProfile(data);
       } catch (err) {
@@ -94,7 +94,7 @@ const MyProfileView = () => {
           </div>
 
           <div className="section-box">
-            <p><strong>CV:</strong> <a href={`https://hiresol-backend1.onrender.com/uploads/${profile.cv}`} target="_blank" rel="noreferrer">Download CV</a></p>
+            <p><strong>CV:</strong> <a href={`https://hiresmart-backend1.onrender.com/uploads/${profile.cv}`} target="_blank" rel="noreferrer">Download CV</a></p>
           </div>
         </div>
       </div>

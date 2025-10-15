@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Coder130804/hiresol-backend.git"
+    "url": "git+https://github.com/Coder130804/hiresmart-backend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Coder130804/hiresol-backend/issues"
+    "url": "https://github.com/Coder130804/hiresmart-backend/issues"
   },
-  "homepage": "https://github.com/Coder130804/hiresol-backend#readme",
+  "homepage": "https://github.com/Coder130804/hiresmart-backend#readme",
   "description": "",
   "dependencies": {
     "bcryptjs": "^3.0.2",

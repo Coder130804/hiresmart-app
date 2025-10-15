@@ -20,7 +20,7 @@ const SignUpSignIn = () => {
 
     try {
       // First try to login (Sign In)
-      let res = await fetch('https://hiresol-backend1.onrender.com/api/auth/signin', {
+      let res = await fetch('https://hiresmart-backend1.onrender.com/api/auth/signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -33,7 +33,7 @@ const SignUpSignIn = () => {
         navigate('/dashboard');
       } else {
         // If login fails, try to register (Sign Up)
-        res = await fetch('https://hiresol-backend1.onrender.com/api/auth/signup', {
+        res = await fetch('https://hiresmart-backend1.onrender.com/api/auth/signup', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData)

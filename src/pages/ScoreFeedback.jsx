@@ -14,7 +14,7 @@ const ScoreFeedback = () => {
       const token = localStorage.getItem('token');
 
       try {
-        const res = await fetch('https://hiresol-backend1.onrender.com/api/ai-feedback', {
+        const res = await fetch('https://hiresmart-backend1.onrender.com/api/ai-feedback', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
