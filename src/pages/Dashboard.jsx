@@ -73,6 +73,9 @@ const Dashboard = () => {
           <li><strong>Give Interview</strong> – answer 10 questions on camera.</li>
           <li><strong>Our Automated System</strong> reviews your answers automatically.</li>
           <li><strong>See Score & Feedback</strong> – see how you performed.</li>
+          <li>Move to the<strong> 'Give Interview Page'</strong>, select the job theme you want to apply for and be ready, the interview will begin automatically!.</li>
+          <li><strong>Note: Finish answering all the questions once you begin, else your progress won't be saved.</strong></li>
+          <li><strong>ALL THE BEST!</strong></li>
         </ol>
       </div>
 
